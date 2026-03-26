@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenEAT - Your AI Food Companion</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --accent-orange: #ff6b35;
+            --accent-yellow: #ffc107;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --border-color: #2a2a3a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(255, 193, 7, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        header {
+            text-align: center;
+            padding: 1rem 0 2rem;
+        }
+        
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        header h1 span {
+            font-size: 2.5rem;
+        }
+        
+        header p {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+        
+        /* Voice Indicator */
+        .voice-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .voice-panel.listening {
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.2);
+        }
+        
+        .voice-visualizer {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            position: relative;
+        }
+        
+        .voice-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-yellow));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            transition: all 0.3s;
+        }
+        
+        .voice-panel.listening .voice-circle {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px 10px rgba(255, 107, 53, 0); }
+        }
+        
+        .voice-status {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+        }
+        
+        .voice-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Location Bar */
+        .location-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .location-icon {
+            font-size: 1.5rem;
+        }
+        
+        .location-info {
+            flex: 1;
+        }
+        
+        .location-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .location-address {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .gps-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: blink 2s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Chat Messages */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            max-width: 85%;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message.ai {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            align-self: flex-start;
+            border-bottom-left-radius: 0.25rem;
+        }
+        
+        .message.user {
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-yellow));
+            color: #000;
+            align-self: flex-end;
+            border-bottom-right-radius: 0.25rem;
+        }
+        
+        .message-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+        
+        /* Restaurant Cards */
+        .restaurant-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-top: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .restaurant-card:hover {
+            border-color: var(--accent-orange);
+            transform: translateX(4px);
+        }
+        
+        .restaurant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+        
+        .restaurant-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .restaurant-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .restaurant-rating .stars {
+            color: var(--accent-yellow);
+        }
+        
+        .restaurant-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .restaurant-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background: rgba(255, 107, 53, 0.2);
+            color: var(--accent-orange);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+        }
+        
+        .tag.michelin {
+            background: rgba(255, 193, 7, 0.2);
+            color: var(--accent-yellow);
+        }
+        
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .action-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .action-btn:hover {
+            border-color: var(--accent-orange);
+            background: rgba(255, 107, 53, 0.1);
+        }
+        
+        /* Input Area */
+        .input-area {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1.5rem;
+            padding: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+        
+        .text-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1rem;
+            padding: 0.5rem;
+        }
+        
+        .text-input:focus {
+            outline: none;
+        }
+        
+        .text-input::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        .send-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-yellow));
+            border: none;
+            color: #000;
+            font-size: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .send-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Stats */
+        .stats-row {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .stat-item {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+        }
+        
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Source badges */
+        .sources {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        
+        .source-badge {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+        
+        .source-badge.yelp { color: #d32323; }
+        .source-badge.michelin { color: var(--accent-yellow); }
+        .source-badge.google { color: #4285f4; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><span>🍽️</span> OpenEAT</h1>
+            <p>Your AI Food Companion</p>
+        </header>
+        
+        <div class="voice-panel" id="voicePanel">
+            <div class="voice-visualizer">
+                <div class="voice-circle">🎤</div>
+            </div>
+            <div class="voice-status" id="voiceStatus">Tap to speak</div>
+            <div class="voice-subtitle" id="voiceSubtitle">Or type your request below</div>
+        </div>
+        
+        <div class="location-bar">
+            <div class="location-icon">📍</div>
+            <div class="location-info">
+                <div class="location-name">San Francisco, CA</div>
+                <div class="location-address">37.7749° N, 122.4194° W</div>
+            </div>
+            <div class="gps-indicator"></div>
+        </div>
+        
+        <div class="chat-container" id="chatContainer">
+            <div class="message ai">
+                <div class="message-text">👋 Hi! I'm OpenEAT. I'm checking nearby restaurants for you. What are you in the mood for?</div>
+                <div class="message-time">Just now</div>
+            </div>
+        </div>
+        
+        <div class="quick-actions">
+            <button class="action-btn" onclick="quickAsk('I want something spicy 🌶️')">
+                🌶️ Spicy
+            </button>
+            <button class="action-btn" onclick="quickAsk('Find Italian food 🍝')">
+                🍝 Italian
+            </button>
+            <button class="action-btn" onclick="quickAsk('Surprise me! 🎲')">
+                🎲 Surprise me
+            </button>
+            <button class="action-btn" onclick="quickAsk('I need coffee ☕')">
+                ☕ Coffee
+            </button>
+        </div>
+        
+        <div class="input-area">
+            <input type="text" class="text-input" id="userInput" placeholder="Ask: 'What's good around here?'" onkeypress="handleEnter(event)">
+            <button class="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+        
+        <div class="stats-row">
+            <div class="stat-item">
+                <div class="stat-value">47</div>
+                <div class="stat-label">Nearby</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Michelin</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">4.2★</div>
+                <div class="stat-label">Avg Rating</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const restaurants = [
+            {
+                name: "Tartine Bakery",
+                rating: 4.7,
+                reviews: 2847,
+                cuisine: "Bakery • American",
+                price: "$$",
+                distance: "0.3 mi",
+                tags: ["Bakery", "Coffee", "Pastries"],
+                michelin: true,
+                sources: ["yelp", "google"]
+            },
+            {
+                name: "House of Prime Rib",
+                rating: 4.6,
+                reviews: 5234,
+                cuisine: "American • Steakhouse",
+                price: "$$$",
+                distance: "0.8 mi",
+                tags: ["Prime Rib", "Classic"],
+                michelin: true,
+                sources: ["michelin", "yelp", "google"]
+            },
+            {
+                name: "Swan Oyster Depot",
+                rating: 4.8,
+                reviews: 1892,
+                cuisine: "Seafood • Oysters",
+                price: "$$$",
+                distance: "0.5 mi",
+                tags: ["Seafood", "Oysters", "Fresh"],
+                michelin: true,
+                sources: ["michelin", "google"]
+            },
+            {
+                name: "Dragon Horse Bakery",
+                rating: 4.5,
+                reviews: 892,
+                cuisine: "Bakery • Asian",
+                price: "$",
+                distance: "0.4 mi",
+                tags: ["Asian", "Coffee", "Unique"],
+                michelin: false,
+                sources: ["yelp", "google"]
+            }
+        ];
+        
+        let isListening = false;
+        
+        function toggleVoice() {
+            const panel = document.getElementById('voicePanel');
+            const status = document.getElementById('voiceStatus');
+            const subtitle = document.getElementById('voiceSubtitle');
+            
+            isListening = !isListening;
+            
+            if (isListening) {
+                panel.classList.add('listening');
+                status.textContent = "Listening...";
+                subtitle.textContent = "Speak naturally";
+                
+                // Simulate listening
+                setTimeout(() => {
+                    panel.classList.remove('listening');
+                    status.textContent = "Tap to speak";
+                    subtitle.textContent = "Processing...";
+                    
+                    const responses = [
+                        "I found some great options nearby!",
+                        "Based on your preference, I recommend these:",
+                        "Great choice! Let me show you the best spots:"
+                    ];
+                    
+                    addMessage(responses[Math.floor(Math.random() * responses.length)], 'ai');
+                    showRestaurants();
+                }, 2500);
+            } else {
+                panel.classList.remove('listening');
+                status.textContent = "Tap to speak";
+                subtitle.textContent = "Or type your request below";
+            }
+        }
+        
+        document.getElementById('voicePanel').addEventListener('click', toggleVoice);
+        
+        function quickAsk(text) {
+            addMessage(text, 'user');
+            processMessage(text);
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+            if (!text) return;
+            
+            addMessage(text, 'user');
+            input.value = '';
+            processMessage(text);
+        }
+        
+        function handleEnter(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+        
+        function addMessage(text, sender) {
+            const container = document.getElementById('chatContainer');
+            const msg = document.createElement('div');
+            msg.className = `message ${sender}`;
+            msg.innerHTML = `
+                <div class="message-text">${text}</div>
+                <div class="message-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+            `;
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        function processMessage(text) {
+            const lower = text.toLowerCase();
+            
+            setTimeout(() => {
+                let response = "";
+                
+                if (lower.includes('spicy') || lower.includes('🌶️')) {
+                    response = "Looking for spicy options... Found some great spots!";
+                } else if (lower.includes('italian') || lower.includes('🍝')) {
+                    response = "Searching for Italian restaurants nearby...";
+                } else if (lower.includes('surprise') || lower.includes('🎲')) {
+                    response = "Let me surprise you! Here's what's trending:";
+                } else if (lower.includes('coffee') || lower.includes('☕')) {
+                    response = "Finding the best coffee spots around...";
+                } else {
+                    response = "Great question! Let me find the best options for you:";
+                }
+                
+                addMessage(response, 'ai');
+                showRestaurants();
+            }, 800);
+        }
+        
+        function showRestaurants() {
+            const container = document.getElementById('chatContainer');
+            
+            restaurants.forEach((r, i) => {
+                setTimeout(() => {
+                    const card = document.createElement('div');
+                    card.className = 'message ai';
+                    card.innerHTML = `
+                        <div class="restaurant-card">
+                            <div class="restaurant-header">
+                                <div class="restaurant-name">${r.name}</div>
+                                <div class="restaurant-rating">
+                                    <span class="stars">★</span> ${r.rating}
+                                </div>
+                            </div>
+                            <div class="restaurant-meta">
+                                <span>${r.cuisine}</span>
+                                <span>${r.price}</span>
+                                <span>📍 ${r.distance}</span>
+                            </div>
+                            <div class="restaurant-tags">
+                                ${r.tags.map(t => `<span class="tag ${r.michelin && t === 'Bakery' ? 'michelin' : ''}">${t}</span>`).join('')}
+                            </div>
+                            <div class="sources">
+                                ${r.sources.map(s => `<span class="source-badge ${s}">${s.charAt(0).toUpperCase() + s.slice(1)}</span>`).join('')}
+                                <span class="source-badge">${r.reviews.toLocaleString()} reviews</span>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                    container.scrollTop = container.scrollHeight;
+                }, i * 400);
+            });
+        }
+    </script>
+</body>
+</html>
