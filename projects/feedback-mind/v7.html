@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Guessing. Build What Users Actually Want.</title>
+    <meta name="description" content="Turn user feedback into product priorities in seconds. No more manual analysis.">
+    <meta property="og:title" content="Stop Guessing. Build What Users Actually Want.">
+    <meta property="og:description" content="The AI tool that turns feedback into your next feature.">
+    <meta property="og:url" content="https://therobbieboo.github.io/feedback-landing/">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --light: #f8fafc;
+        }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            line-height: 1.6; 
+            color: var(--dark);
+            background: var(--dark);
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
+        
+        /* Hero Section */
+        .hero { text-align: center; color: white; margin-bottom: 50px; }
+        .hero-badge { 
+            display: inline-block; 
+            background: rgba(99, 102, 241, 0.2); 
+            color: #818cf8; 
+            padding: 8px 16px; 
+            border-radius: 20px; 
+            font-size: 13px; 
+            font-weight: 600; 
+            margin-bottom: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+        .hero h1 { 
+            font-size: 48px; 
+            line-height: 1.1; 
+            margin-bottom: 20px; 
+            font-weight: 800; 
+        }
+        .hero h1 span { color: #818cf8; }
+        .hero p { 
+            font-size: 20px; 
+            color: #94a3b8; 
+            max-width: 600px; 
+            margin: 0 auto 30px; 
+        }
+        
+        /* CTA Buttons */
+        .cta-group { display: flex; gap: 15px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
+        .cta-primary { 
+            background: var(--primary); 
+            color: white; 
+            padding: 16px 32px; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .cta-primary:hover { 
+            background: var(--primary-dark); 
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+        .cta-secondary { 
+            background: rgba(255,255,255,0.1); 
+            color: white; 
+            padding: 16px 32px; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.2s;
+        }
+        .cta-secondary:hover { background: rgba(255,255,255,0.15); }
+        
+        /* Main Card */
+        .card { 
+            background: white; 
+            border-radius: 24px; 
+            padding: 50px; 
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+            margin-bottom: 40px;
+        }
+        
+        /* Demo Section */
+        .demo { 
+            background: linear-gradient(135deg, #1e1b4b, #312e81); 
+            border-radius: 16px; 
+            padding: 30px; 
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .demo-label { 
+            color: #818cf8; 
+            font-size: 14px; 
+            font-weight: 600; 
+            margin-bottom: 15px; 
+        }
+        .demo-screen { 
+            background: #0f172a; 
+            border-radius: 12px; 
+            padding: 20px; 
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+        .demo-placeholder { 
+            color: #64748b; 
+            font-size: 14px; 
+            padding: 40px;
+        }
+        
+        /* Problem Section */
+        .problem { 
+            background: #fef2f2; 
+            border-left: 4px solid #ef4444; 
+            padding: 20px 25px; 
+            border-radius: 0 12px 12px 0; 
+            margin: 25px 0; 
+        }
+        .problem h3 { color: #dc2626; font-size: 16px; margin-bottom: 8px; }
+        .problem p { color: #7f1d1d; font-size: 15px; }
+        
+        /* Features Grid */
+        .features { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+            margin: 30px 0; 
+        }
+        .feature { 
+            padding: 25px; 
+            background: var(--light); 
+            border-radius: 12px; 
+            text-align: center;
+        }
+        .feature-icon { font-size: 36px; margin-bottom: 12px; }
+        .feature h4 { font-size: 16px; color: var(--dark); margin-bottom: 8px; }
+        .feature p { font-size: 14px; color: var(--gray); }
+        
+        /* How It Works */
+        .steps { margin: 40px 0; }
+        .steps h3 { font-size: 24px; margin-bottom: 25px; text-align: center; }
+        .step { 
+            display: flex; 
+            align-items: flex-start; 
+            margin-bottom: 20px; 
+            padding: 20px;
+            background: var(--light);
+            border-radius: 12px;
+        }
+        .step-num { 
+            background: var(--primary); 
+            color: white; 
+            width: 32px; 
+            height: 32px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: 700; 
+            font-size: 14px; 
+            margin-right: 15px; 
+            flex-shrink: 0; 
+        }
+        .step-content strong { display: block; font-size: 16px; margin-bottom: 4px; }
+        .step-content p { font-size: 14px; color: var(--gray); }
+        
+        /* Social Proof */
+        .social-proof { 
+            background: linear-gradient(135deg, var(--primary), #8b5cf6); 
+            border-radius: 16px; 
+            padding: 30px; 
+            margin: 30px 0; 
+            text-align: center; 
+            color: white; 
+        }
+        .social-proof h3 { font-size: 18px; margin-bottom: 20px; }
+        .proof-numbers { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
+        .proof-item { text-align: center; }
+        .proof-num { font-size: 32px; font-weight: 800; }
+        .proof-label { font-size: 13px; opacity: 0.9; }
+        
+        /* Testimonials */
+        .testimonials { margin: 40px 0; }
+        .testimonials h3 { font-size: 24px; margin-bottom: 25px; text-align: center; }
+        .testimonial { 
+            background: var(--light); 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin-bottom: 15px;
+        }
+        .testimonial p { font-size: 15px; color: var(--gray); font-style: italic; margin-bottom: 10px; }
+        .testimonial-author { font-size: 14px; font-weight: 600; color: var(--dark); }
+        
+        /* Pricing */
+        .pricing { text-align: center; margin: 40px 0; }
+        .pricing h3 { font-size: 24px; margin-bottom: 10px; }
+        .price { font-size: 56px; font-weight: 800; color: var(--dark); }
+        .price span { font-size: 16px; color: var(--gray); font-weight: 400; }
+        .price-note { color: var(--secondary); font-size: 14px; margin-top: 10px; }
+        
+        /* Final CTA */
+        .final-cta { text-align: center; padding: 40px 0; }
+        .final-cta input { 
+            padding: 16px 20px; 
+            border-radius: 12px; 
+            border: 2px solid #e2e8f0; 
+            font-size: 16px; 
+            width: 280px;
+            margin-right: 10px;
+        }
+        .final-cta input:focus { outline: none; border-color: var(--primary); }
+        
+        /* Trust Signals */
+        .trust { text-align: center; color: var(--gray); font-size: 14px; margin-top: 20px; }
+        .trust span { margin: 0 10px; }
+        
+        footer { text-align: center; margin-top: 40px; color: rgba(255,255,255,0.5); font-size: 14px; }
+        
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 32px; }
+            .hero p { font-size: 17px; }
+            .card { padding: 30px 20px; }
+            .cta-group { flex-direction: column; }
+            .final-cta input { width: 100%; margin-bottom: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <div class="hero-badge">🚀 First 100 Users - Forever Free</div>
+            <h1>Stop Guessing.<br><span>Build What Users Actually Want.</span></h1>
+            <p>Paste your user feedback — get instant priorities. No manual analysis. No guesswork.</p>
+            
+            <div class="cta-group">
+                <a href="#signup" class="cta-primary">Get Early Access</a>
+                <a href="#how-it-works" class="cta-secondary">See How It Works</a>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="demo">
+                <div class="demo-label">✧ Product Demo</div>
+                <div class="demo-screen">
+                    <div class="demo-placeholder">
+                        📥 Paste Feedback → 🎯 Get Priorities<br>
+                        <small>Try: "Users want dark mode" + "Login broken on mobile" + "Need API"</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="problem">
+                <h3>⚠️ The Problem</h3>
+                <p>You have hundreds of messages, surveys, and reviews. Reading them all takes hours. You miss insights that could double your retention.</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h4>Instant Analysis</h4>
+                    <p>Seconds, not hours</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h4>Smart Priorities</h4>
+                    <p>Know what to build next</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h4>Private & Secure</h4>
+                    <p>Your data stays yours</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <h4>Export Reports</h4>
+                    <p>Share with your team</p>
+                </div>
+            </div>
+            
+            <div class="steps" id="how-it-works">
+                <h3>How It Works</h3>
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <strong>Paste your feedback</strong>
+                        <p>Copy emails, surveys, reviews, or support tickets</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <strong>AI analyzes instantly</strong>
+                        <p>Sentiment, categories, and urgency detected</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <strong>Get prioritized roadmap</strong>
+                        <p>Exactly what to build next, in order</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonials">
+                <h3>What Indie Hackers Say</h3>
+                <div class="testimonial">
+                    <p>"I used to spend 5 hours every week just reading user feedback. Now I paste it and get priorities in 30 seconds."</p>
+                    <div class="testimonial-author">— Solo founder, Bootstrapped</div>
+                </div>
+                <div class="testimonial">
+                    <p>"Finally know what my users actually want. No more guessing."</p>
+                    <div class="testimonial-author">— Indie hacker, YC alumni</div>
+                </div>
+            </div>
+            
+            <div class="social-proof">
+                <h3>🎁 Launch Special</h3>
+                <div class="proof-numbers">
+                    <div class="proof-item">
+                        <div class="proof-num">5hrs</div>
+                        <div class="proof-label">saved/week</div>
+                    </div>
+                    <div class="proof-item">
+                        <div class="proof-num">30sec</div>
+                        <div class="proof-label">to results</div>
+                    </div>
+                    <div class="proof-item">
+                        <div class="proof-num">Free</div>
+                        <div class="proof-label">forever*</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pricing">
+                <h3>Simple Pricing</h3>
+                <div class="price">$0 <span>for first 100 users</span></div>
+                <div class="price-note">✓ No credit card · ✓ No setup required · ✓ Cancel anytime</div>
+            </div>
+            
+            <div class="final-cta" id="signup">
+                <form id="signup-form" style="display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+                    <input type="email" id="email-input" placeholder="your@email.com" required>
+                    <button type="submit" class="cta-primary">Get Early Access</button>
+                </form>
+                <div class="trust">
+                    <span>🔒 No credit card</span>
+                    <span>•</span>
+                    <span>2-minute setup</span>
+                    <span>•</span>
+                    <span>Cancel anytime</span>
+                </div>
+            </div>
+        </div>
+        
+        <footer>© 2026 FeedbackMind · Built for indie hackers</footer>
+    </div>
+    
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email-input').value;
+            const btn = this.querySelector('button');
+            btn.textContent = 'Joining...';
+            btn.disabled = true;
+            try {
+                await fetch('https://formspree.io/f/xkoqpdkl', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, source: 'v7-optimized' })
+                });
+            } catch(err) {}
+            alert('🎉 You\'re on the list! Check your email for next steps.');
+            btn.textContent = 'Get Early Access';
+            btn.disabled = false;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "feedback-mind",
+  "version": "1.0.0",
+  "description": "> 幫助 Indie Hackers 自動分析用戶回饋的 AI 工具",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "playwright": "^1.58.2",
+    "twitter-api-v2": "^1.29.0"
+  }
+}

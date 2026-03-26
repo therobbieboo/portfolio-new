@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FeedbackMind - Free for First 100 Users</title>
+    <meta name="description" content="Get AI-powered feedback analysis completely FREE. First 100 users only.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: linear-gradient(180deg, #e8f5e9 0%, #fff 100%); min-height: 100vh; }
+        .container { max-width: 700px; margin: 0 auto; padding: 60px 20px; }
+        .card { background: white; border-radius: 24px; padding: 50px; box-shadow: 0 20px 60px rgba(0,200,83,0.15); }
+        .badge { display: inline-block; background: #4caf50; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; margin-bottom: 20px; }
+        h1 { font-size: 42px; line-height: 1.2; margin-bottom: 15px; color: #1b5e20; }
+        .hero { font-size: 24px; color: #333; margin-bottom: 10px; }
+        .subtitle { font-size: 18px; color: #666; margin-bottom: 30px; }
+        .box { background: #e8f5e9; padding: 25px; border-radius: 16px; margin: 25px 0; text-align: center; }
+        .box-icon { font-size: 48px; }
+        .box h3 { color: #2e7d32; margin: 10px 0; }
+        .features { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 30px 0; }
+        .feature { text-align: center; padding: 20px; background: #f5f5f5; border-radius: 12px; }
+        .feature-icon { font-size: 28px; }
+        .feature h4 { font-size: 14px; color: #333; margin: 8px 0; }
+        .price { font-size: 42px; color: #2e7d32; font-weight: bold; margin: 20px 0; }
+        .price span { font-size: 16px; color: #666; }
+        .form { display: flex; gap: 10px; max-width: 400px; margin: 25px auto; }
+        .form input { flex: 1; padding: 16px 20px; border-radius: 12px; border: 2px solid #4caf50; font-size: 16px; }
+        .form button { padding: 16px 30px; background: #4caf50; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; }
+        .form button:hover { background: #388e3c; }
+        .note { text-align: center; color: #888; font-size: 14px; }
+        footer { text-align: center; margin-top: 40px; color: #888; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="badge">🎁 Free Forever</div>
+            <h1>First 100 Users<br>Get It Free</h1>
+            <p class="hero">AI that reads user feedback and tells you what to build.</p>
+            <p class="subtitle">No credit card required.</p>
+            
+            <div class="box">
+                <div class="box-icon">🚀</div>
+                <h3>Join the First 100</h3>
+                <p>Complete feedback analysis - 100% FREE forever</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🧠</div>
+                    <h4>Auto-Categorize</h4>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h4>Priority Scores</h4>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h4>Instant Results</h4>
+                </div>
+            </div>
+            
+            <div class="price">FREE <span>for first 100</span></div>
+            
+            <form class="form" id="signup-form">
+                <input type="email" id="email-input" placeholder="Enter your email" required>
+                <button type="submit">Claim Free Access</button>
+            </form>
+            
+            <p class="note">🔒 No credit card. Cancel anytime.</p>
+        </div>
+        <footer>© 2026 FeedbackMind</footer>
+    </div>
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email-input').value;
+            const btn = this.querySelector('button');
+            btn.textContent = 'Claiming...';
+            btn.disabled = true;
+            try {
+                await fetch('https://formspree.io/f/xkoqpdkl', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, source: 'v3-free' })
+                });
+            } catch(err) {}
+            alert('🎉 Free access claimed! Check your email.');
+            btn.textContent = 'Claim Free Access';
+            btn.disabled = false;
+        });
+    </script>
+</body>
+</html>

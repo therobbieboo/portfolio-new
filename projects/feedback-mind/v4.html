@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FeedbackMind - AI-Powered User Feedback Analysis</title>
+    <meta name="description" content="Turn messy user feedback into actionable product decisions. Free for early users.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1a1a2e; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 680px; margin: 0 auto; padding: 50px 20px; }
+        .card { background: white; border-radius: 24px; padding: 50px; box-shadow: 0 25px 80px rgba(0,0,0,0.3); }
+        .badge { display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 10px 20px; border-radius: 25px; font-size: 13px; font-weight: 700; margin-bottom: 25px; letter-spacing: 0.5px; }
+        h1 { font-size: 44px; line-height: 1.15; margin-bottom: 20px; color: #1a1a2e; font-weight: 800; }
+        .hero { font-size: 22px; color: #4a4a6a; margin-bottom: 30px; line-height: 1.5; }
+        .problem { background: #f8f9fa; border-left: 4px solid #667eea; padding: 20px 25px; border-radius: 0 12px 12px 0; margin: 25px 0; }
+        .problem h3 { color: #667eea; font-size: 16px; margin-bottom: 8px; }
+        .solution { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 30px 0; }
+        .item { padding: 20px; background: #f8f9fa; border-radius: 12px; }
+        .item-icon { font-size: 24px; margin-bottom: 8px; }
+        .item h4 { font-size: 15px; color: #1a1a2e; margin-bottom: 5px; }
+        .item p { font-size: 13px; color: #6a6a8a; }
+        .price { font-size: 48px; color: #1a1a2e; font-weight: 800; margin: 25px 0 10px; }
+        .price span { font-size: 16px; color: #6a6a8a; font-weight: 400; }
+        .cta { display: flex; gap: 12px; max-width: 420px; margin: 25px auto; }
+        .cta input { flex: 1; padding: 18px 22px; border-radius: 12px; border: 2px solid #e0e0e0; font-size: 16px; transition: border-color 0.3s; }
+        .cta input:focus { outline: none; border-color: #667eea; }
+        .cta button { padding: 18px 35px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .cta button:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(102,126,234,0.4); }
+        .note { text-align: center; color: #888; font-size: 14px; margin-top: 15px; }
+        .social-proof { display: flex; justify-content: center; gap: 20px; margin-top: 25px; padding-top: 25px; border-top: 1px solid #eee; }
+        .proof-item { text-align: center; }
+        .proof-num { font-size: 24px; font-weight: 800; color: #667eea; }
+        .proof-label { font-size: 12px; color: #888; }
+        footer { text-align: center; margin-top: 35px; color: rgba(255,255,255,0.7); font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="badge">🚀 EARLY ACCESS</div>
+            <h1>Stop Guessing What Users Want</h1>
+            <p class="hero">Paste your user feedback. Get instant analysis: sentiment, categories, and prioritized action items.</p>
+            
+            <div class="problem">
+                <h3>📊 The Problem</h3>
+                <p>You have hundreds of user messages, surveys, and reviews. Reading them all takes hours. You miss insights that could double your retention.</p>
+            </div>
+            
+            <div class="solution">
+                <div class="item">
+                    <div class="item-icon">🧠</div>
+                    <h4>AI Analysis</h4>
+                    <p>Automatically detect sentiment & themes</p>
+                </div>
+                <div class="item">
+                    <div class="item-icon">🎯</div>
+                    <h4>Prioritization</h4>
+                    <p>Know what to build next</p>
+                </div>
+                <div class="item">
+                    <div class="item-icon">⚡</div>
+                    <h4>5 Second Setup</h4>
+                    <p>No training required</p>
+                </div>
+                <div class="item">
+                    <div class="item-icon">🔒</div>
+                    <h4>Private & Secure</h4>
+                    <p>Your data stays yours</p>
+                </div>
+            </div>
+            
+            <div class="price">$0 <span>for first 100 users</span></div>
+            
+            <form class="cta" id="signup-form">
+                <input type="email" id="email-input" placeholder="your@email.com" required>
+                <button type="submit">Get Early Access</button>
+            </form>
+            
+            <p class="note">🔒 No credit card · 2-minute setup · Cancel anytime</p>
+            
+            <div class="social-proof">
+                <div class="proof-item">
+                    <div class="proof-num">50+</div>
+                    <div class="proof-label">hours saved</div>
+                </div>
+                <div class="proof-item">
+                    <div class="proof-num">100%</div>
+                    <div class="proof-label">AI-powered</div>
+                </div>
+                <div class="proof-item">
+                    <div class="proof-num">Free</div>
+                    <div class="proof-label">forever*</div>
+                </div>
+            </div>
+        </div>
+        <footer>© 2026 FeedbackMind · Made for indie hackers</footer>
+    </div>
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email-input').value;
+            const btn = this.querySelector('button');
+            btn.textContent = 'Joining...';
+            btn.disabled = true;
+            try {
+                await fetch('https://formspree.io/f/xkoqpdkl', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, source: 'v4-early-access' })
+                });
+            } catch(err) {}
+            alert('🎉 You\'re on the list! Check your email for next steps.');
+            btn.textContent = 'Get Early Access';
+            btn.disabled = false;
+        });
+    </script>
+</body>
+</html>
