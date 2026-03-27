@@ -406,8 +406,8 @@
             <div class="rice-bowl">
                 <span class="rice-bowl-icon">🍚</span>
             </div>
-            <div class="voice-status" id="voiceStatus">Tap & Speak</div>
-            <div class="voice-hint" id="voiceHint">Tell me what you want to eat</div>
+            <div class="voice-status" id="voiceStatus">點擊說話</div>
+            <div class="voice-hint" id="voiceHint">告訴我你想吃什麼</div>
             <div class="wave-container">
                 <div class="wave-bar"></div>
                 <div class="wave-bar"></div>
@@ -481,7 +481,7 @@
             recognition = new SpeechRecognition();
             recognition.continuous = false;
             recognition.interimResults = false;
-            recognition.lang = 'en-US';
+            recognition.lang = 'zh-TW';
             
             recognition.onresult = (event) => {
                 const transcript = event.results[0][0].transcript;
@@ -589,32 +589,38 @@
             main.classList.add('speaking');
             status.textContent = "Speaking...";
             
-            // Simulate AI thinking
+            // Simulate AI thinking - faster!
             setTimeout(() => {
                 const response = generateResponse(text);
                 speakResponse(response);
-            }, 800);
+            }, 200);
         }
         
         function generateResponse(text) {
             const lower = text.toLowerCase();
             
-            if (lower.includes('spicy') || lower.includes('🌶️')) {
-                return "Looking for spicy options! Found some great Sichuan and Thai places nearby. Let me show you!";
-            } else if (lower.includes('italian') || lower.includes('🍝')) {
-                return "Found 3 excellent Italian restaurants. The pasta at Italian Homemade Company is amazing!";
-            } else if (lower.includes('surprise') || lower.includes('🎲')) {
-                return "Let me surprise you! Based on trending reviews, Swan Oyster Depot is the place to go right now.";
-            } else if (lower.includes('coffee') || lower.includes('☕')) {
-                return "Need caffeine! Tartine Bakery has the best coffee in the neighborhood. Only 3 minutes away.";
-            } else if (lower.includes('sushi') || lower.includes('japanese')) {
-                return "Great choice! Found excellent sushi spots. Let me recommend the freshest ones.";
-            } else if (lower.includes('cheap') || lower.includes('budget') || lower.includes('$')) {
-                return "Looking for affordable options! There are some great budget-friendly spots around.";
-            } else if (lower.includes('michelin') || lower.includes('fancy') || lower.includes('special')) {
-                return "Found 3 Michelin-recommended places! They're perfect for a special occasion.";
+            if (lower.includes('辣') || lower.includes(' spicy')) {
+                return "找到幾家超棒的麻辣火鍋和泰式料理！讓我推薦給你！";
+            } else if (lower.includes('義大利') || lower.includes('italian') || lower.includes('義式')) {
+                return "附近有3家很棒的義大利餐廳！義大利手工麵特別好吃！";
+            } else if (lower.includes('驚喜') || lower.includes('surprise')) {
+                return "讓我給你一個驚喜！根據最新評價，現在最火的是這家！";
+            } else if (lower.includes('咖啡') || lower.includes('coffee')) {
+                return "需要提神嗎？附近有幾家咖啡店很不錯！";
+            } else if (lower.includes('壽司') || lower.includes('日本') || lower.includes('sushi') || lower.includes('japanese')) {
+                return "壽司愛好者！找到幾家最新鮮的日本料理！";
+            } else if (lower.includes('便宜') || lower.includes('省') || lower.includes('budget') || lower.includes('$')) {
+                return "想省錢？這裡有幾家CP值超高的餐廳！";
+            } else if (lower.includes('米其林') || lower.includes('高級') || lower.includes('michelin')) {
+                return "找到3家米其林推薦餐廳！適合特別的場合！";
+            } else if (lower.includes('火鍋')) {
+                return "火鍋時間！這裡有幾家超人氣火鍋店！";
+            } else if (lower.includes('牛肉') || lower.includes('牛') || lower.includes(' steak')) {
+                return "牛排來了！找到幾家頂級牛排館！";
+            } else if (lower.includes('早餐') || lower.includes('早午餐') || lower.includes('brunch')) {
+                return "早餐時間！這裡的早午餐超級熱門！";
             } else {
-                return "Great choice! Let me find the best options for you right now.";
+                return "好的！讓我帮你找找附近好吃的餐廳！";
             }
         }
         
@@ -625,16 +631,20 @@
             // Speak the response
             if ('speechSynthesis' in window) {
                 utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.9;
+                utterance.rate = 1.1; // Faster
                 utterance.pitch = 1;
                 
-                // Try to find a good voice
+                // Try to find a Chinese voice first
                 const voices = speechSynthesis.getVoices();
-                const englishVoice = voices.find(v => v.lang.startsWith('en') && v.name.includes('Google')) 
-                    || voices.find(v => v.lang.startsWith('en'));
+                const chineseVoice = voices.find(v => v.lang.startsWith('zh')) 
+                    || voices.find(v => v.lang.startsWith('cmn'));
                 
-                if (englishVoice) {
-                    utterance.voice = englishVoice;
+                if (chineseVoice) {
+                    utterance.voice = chineseVoice;
+                    utterance.lang = chineseVoice.lang;
+                } else {
+                    // Fallback: try any available voice
+                    utterance.lang = 'zh-TW';
                 }
                 
                 utterance.onend = () => {
@@ -644,10 +654,16 @@
                     const hint = document.getElementById('voiceHint');
                     
                     main.classList.remove('speaking');
-                    status.textContent = "Tap & Speak";
-                    hint.textContent = "Tell me what you want";
+                    status.textContent = "點擊說話";
+                    hint.textContent = "告訴我你想吃什麼";
                     
                     // Show restaurants after speaking
+                    showRestaurants();
+                };
+                
+                utterance.onerror = () => {
+                    // Continue even if speech fails
+                    isProcessing = false;
                     showRestaurants();
                 };
                 
@@ -655,14 +671,6 @@
             } else {
                 // No speech synthesis, just show restaurants
                 isProcessing = false;
-                const main = document.getElementById('voiceMain');
-                const status = document.getElementById('voiceStatus');
-                const hint = document.getElementById('voiceHint');
-                
-                main.classList.remove('speaking');
-                status.textContent = "Tap & Speak";
-                hint.textContent = "Tell me what you want";
-                
                 showRestaurants();
             }
         }
