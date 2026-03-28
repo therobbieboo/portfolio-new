@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 const PORT = process.env.PORT || process.env.RAILWAY_PORT || 3000;
 
 // MiniMax config from environment
-const API_KEY = process.env.MINIMAX_API_KEY || "";
+const API_KEY = process.env.MINIMAX_API_KEY || "sk-api-7-G6hmSns0tnEvGcvYemJOWLWBprC3NR2x3VYsf05ATa4Q3b52wTX4oNw7_slGKOmWI9W4ZFPqMsVGGxkmLz_LjikjreHqYF4gJu--YkLDsY_-kksoXGHh8";
 const GROUP_ID = process.env.MINIMAX_GROUP_ID || "2015394789192643334";
 
 // Convert hex to bytes
@@ -19,7 +19,7 @@ function hexToBytes(hex) {
 // Generate TTS
 async function generateTTS(text, options = {}) {
     const model = options.model || "speech-2.8-hd";
-    const voice = options.voice || "Reliable_Executive";
+    const voice = options.voice || "Chinese (Mandarin)_Cute_Spirit";
     const speed = options.speed || 1;
     const emotion = options.emotion || "warm";
     

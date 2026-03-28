@@ -212,7 +212,7 @@
 <body>
     <div class="container">
         <h1>👨‍👧 OpenPapa</h1>
-        <p class="subtitle">溫暖的語音對話 Agent <span style="color:#555;font-size:0.7rem;">v2.2</span></p>
+        <p class="subtitle">溫暖的語音對話 Agent <span style="color:#555;font-size:0.7rem;">v2.4</span></p>
         
         <div class="avatar" id="avatar">👨</div>
         
@@ -234,9 +234,9 @@
     
     <script>
         // MiniMax API Configuration
-        const API_KEY = "sk-api-cfZPZuhJpOI2b7yt8x-v2mR6PjuwbpA3ZV31wLxiJjlJD3MolmrbXYkPR68Oy_d4pi8UpTiY3HvzxafmLQYRlIIaiJrrSaAVgmwysNFrBgrSQ9T3XOHm3tI";
+        const API_KEY = "sk-api-7-G6hmSns0tnEvGcvYemJOWLWBprC3NR2x3VYsf05ATa4Q3b52wTX4oNw7_slGKOmWI9W4ZFPqMsVGGxkmLz_LjikjreHqYF4gJu--YkLDsY_-kksoXGHh8";
         const GROUP_ID = "2015394789192643334";
-        const TTS_URL = "https://portfolio-tts-test-production.up.railway.app/tts";
+        const TTS_URL = "https://portfolio-new-production-97a4.up.railway.app/tts";
         
         // State
         let isCallActive = false;
@@ -397,7 +397,7 @@
                     body: JSON.stringify({
                         text: text,
                         model: 'speech-2.8-hd',
-                        voice: 'Reliable_Executive', // Warm male voice
+                        voice: 'Chinese (Mandarin)_Cute_Spirit', // Warm male voice
                         speed: 1,
                         emotion: 'warm'
                     })
