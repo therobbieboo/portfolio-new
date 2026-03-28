@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimax TTS Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #fff;
+        }
+        h1 { color: #00d4aa; }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #0a0a0f;
+            color: #fff;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn-test {
+            background: #00d4aa;
+            color: #0a0a0f;
+        }
+        .btn-play {
+            background: #a855f7;
+            color: #fff;
+        }
+        audio {
+            width: 100%;
+            margin: 20px 0;
+        }
+        .log {
+            background: #0a0a0f;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .success { color: #00d4aa; }
+        .error { color: #ff4757; }
+    </style>
+</head>
+<body>
+    <h1>🎤 Minimax TTS Test</h1>
+    
+    <div>
+        <label>文字輸入：</label>
+        <textarea id="textInput">你好！這是測試語音。</textarea>
+    </div>
+    
+    <div>
+        <button class="btn-test" onclick="testTTS()">🔊 生成語音</button>
+        <button class="btn-play" onclick="playAudio()">▶️ 播放</button>
+    </div>
+    
+    <audio id="audioPlayer" controls></audio>
+    
+    <div>
+        <label>日誌：</label>
+        <div class="log" id="log"></div>
+    </div>
+
+    <script>
+        const TTS_URL = "https://openpapa-tts-test-production.up.railway.app/tts";
+        let lastAudioBlob = null;
+        
+        function log(msg, type = '') {
+            const logEl = document.getElementById('log');
+            const prefix = type === 'success' ? '✅ ' : type === 'error' ? '❌ ' : '📝 ';
+            logEl.textContent += prefix + msg + '\n';
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+        
+        async function testTTS() {
+            const text = document.getElementById('textInput').value.trim();
+            if (!text) {
+                log('請輸入文字', 'error');
+                return;
+            }
+            
+            log('開始測試 TTS...');
+            log('URL: ' + TTS_URL);
+            log('文字: ' + text);
+            
+            try {
+                const response = await fetch(TTS_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: text,
+                        model: 'speech-2.8-hd',
+                        voice: 'Chinese (Mandarin)_Cute_Spirit',
+                        speed: 1,
+                        emotion: 'happy'
+                    })
+                });
+                
+                log('HTTP Status: ' + response.status);
+                
+                if (!response.ok) {
+                    const error = await response.text();
+                    log('錯誤: ' + error, 'error');
+                    return;
+                }
+                
+                lastAudioBlob = await response.blob();
+                log('音頻大小: ' + lastAudioBlob.size + ' bytes', 'success');
+                log('音頻類型: ' + lastAudioBlob.type, 'success');
+                
+                const url = URL.createObjectURL(lastAudioBlob);
+                document.getElementById('audioPlayer').src = url;
+                
+                log('音頻已準備好，可以播放', 'success');
+                
+            } catch (err) {
+                log('網路錯誤: ' + err.message, 'error');
+            }
+        }
+        
+        function playAudio() {
+            const player = document.getElementById('audioPlayer');
+            if (player.src) {
+                player.play();
+            } else {
+                log('請先生成語音', 'error');
+            }
+        }
+    </script>
+</body>
+</html>
