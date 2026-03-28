@@ -4,8 +4,15 @@ const fetch = require('node-fetch');
 const PORT = process.env.PORT || process.env.RAILWAY_PORT || 3000;
 
 // MiniMax config from environment
-const API_KEY = process.env.MINIMAX_API_KEY || "sk-api-7-G6hmSns0tnEvGcvYemJOWLWBprC3NR2x3VYsf05ATa4Q3b52wTX4oNw7_slGKOmWI9W4ZFPqMsVGGxkmLz_LjikjreHqYF4gJu--YkLDsY_-kksoXGHh8";
+const API_KEY = process.env.MINIMAX_API_KEY || "";
 const GROUP_ID = process.env.MINIMAX_GROUP_ID || "2015394789192643334";
+
+// CORS headers - set for all responses
+const CORS_HEADERS = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type'
+};
 
 // Convert hex to bytes
 function hexToBytes(hex) {
@@ -54,77 +61,67 @@ async function generateTTS(text, options = {}) {
     throw new Error(data.base_resp?.status_msg || 'No audio data');
 }
 
+// Send response with CORS headers
+function sendResponse(res, statusCode, contentType, body) {
+    const headers = { ...CORS_HEADERS };
+    if (contentType) headers['Content-Type'] = contentType;
+    res.writeHead(statusCode, headers);
+    res.end(body);
+}
+
 // HTTP Server
 const server = http.createServer(async (req, res) => {
-    // CORS headers
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    
+    // Handle CORS preflight
     if (req.method === 'OPTIONS') {
-        res.writeHead(200);
-        res.end();
+        sendResponse(res, 200, 'application/json', '');
         return;
     }
     
     // Health check
     if (req.url === '/health' || req.url === '/_health') {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ status: 'ok', time: Date.now() }));
+        sendResponse(res, 200, 'application/json', JSON.stringify({ status: 'ok', time: Date.now() }));
         return;
     }
     
     // Root endpoint
     if (req.url === '/' || req.url === '') {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end('OpenPapa TTS Server is running!');
+        sendResponse(res, 200, 'text/plain', 'OpenPapa TTS Server is running!');
         return;
     }
     
     // TTS endpoint
     if (req.url === '/tts' && req.method === 'POST') {
-        try {
-            let body = '';
-            req.on('data', chunk => body += chunk);
-            req.on('end', async () => {
-                try {
-                    const { text, ...options } = JSON.parse(body);
-                    
-                    if (!text) {
-                        res.writeHead(400, { 'Content-Type': 'application/json' });
-                        res.end(JSON.stringify({ error: 'text is required' }));
-                        return;
-                    }
-                    
-                    console.log('Generating TTS for:', text.substring(0, 50));
-                    const audioBytes = await generateTTS(text, options);
-                    
-                    res.writeHead(200, { 
-                        'Content-Type': 'audio/mp3',
-                        'Content-Length': audioBytes.length
-                    });
-                    res.end(Buffer.from(audioBytes));
-                } catch (err) {
-                    console.error('TTS error:', err);
-                    res.writeHead(500, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ error: err.message }));
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', async () => {
+            try {
+                const { text, ...options } = JSON.parse(body);
+                
+                if (!text) {
+                    sendResponse(res, 400, 'application/json', JSON.stringify({ error: 'text is required' }));
+                    return;
                 }
-            });
-        } catch (err) {
-            console.error('Request error:', err);
-            res.writeHead(500, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: err.message }));
-        }
+                
+                console.log('Generating TTS for:', text.substring(0, 50));
+                const audioBytes = await generateTTS(text, options);
+                
+                sendResponse(res, 200, 'audio/mp3', Buffer.from(audioBytes));
+                
+            } catch (err) {
+                console.error('TTS error:', err);
+                sendResponse(res, 500, 'application/json', JSON.stringify({ error: err.message }));
+            }
+        });
         return;
     }
     
     // 404
-    res.writeHead(404);
-    res.end('Not found');
+    sendResponse(res, 404, 'text/plain', 'Not found');
 });
 
 server.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 TTS Server running on port ${PORT}`);
+    console.log(`   API Key: ${API_KEY ? 'Set' : 'NOT SET'}`);
     console.log(`   Endpoint: POST /tts with { "text": "你好" }`);
     console.log(`   Returns: audio/mp3`);
 });
