@@ -188,6 +188,24 @@
             margin-top: 16px;
             font-size: 0.9rem;
         }
+        
+        .debug {
+            margin-top: 16px;
+            text-align: left;
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: #8888a0;
+            background: #0a0a0f;
+            padding: 8px;
+            border-radius: 8px;
+            max-height: 80px;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        .debug.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -208,19 +226,24 @@
         
         <div class="transcript" id="transcript"></div>
         <div class="error" id="error"></div>
+        <div class="debug" id="debug"></div>
+        
+        <audio id="audioPlayer" style="display:none;"></audio>
     </div>
     
     <script>
         // MiniMax API Configuration
         const API_KEY = "sk-api-UDQ_gH2CVSsDk0RDT9GSmprIGzlzHzn-hVzyqmc5Zo_AAqbHxurA5yY2oTW5zTWb87-rcH9mrGvO3LPcDRglXCir9g96CISJLr1lPFTq1QC4JmBTxeUPxnE";
         const GROUP_ID = "2015394789192643334";
+        const TTS_URL = "https://portfolio-tts-test-production.up.railway.app/tts";
         
         // State
         let isCallActive = false;
         let recognition = null;
         let conversationHistory = [];
         let isProcessing = false;
-        let synthesis = window.speechSynthesis;
+        let isSpeaking = false;
+        let currentAudio = null;
         
         // Agent personality prompt
         const SYSTEM_PROMPT = `你是 OpenPapa，一個溫暖、体贴的父親角色AI助手。
@@ -233,6 +256,13 @@
 - 回答簡潔有力，不囉嗦
 
 請用繁體中文回答，語氣要像一個溫暖的父親。`;
+        
+        // Debug log
+        function debug(msg) {
+            console.log('[OpenPapa]', msg);
+            const debugEl = document.getElementById('debug');
+            debugEl.textContent = '[OpenPapa] ' + msg + '\n' + debugEl.textContent;
+        }
         
         // Initialize speech recognition
         function initSpeechRecognition() {
@@ -260,7 +290,7 @@
             
             recognition.onerror = (event) => {
                 if (event.error !== 'no-speech' && event.error !== 'aborted') {
-                    console.error('Speech recognition error:', event.error);
+                    debug('Speech error: ' + event.error);
                 }
             };
             
@@ -269,7 +299,7 @@
                     try {
                         recognition.start();
                     } catch (e) {
-                        console.log('Recognition restarted');
+                        debug('Recognition restart');
                     }
                 }
             };
@@ -280,6 +310,9 @@
         // Process user input
         async function processUserInput(text) {
             if (!text.trim() || isProcessing) return;
+            
+            // Stop any current speech before processing new input
+            stopSpeech();
             
             isProcessing = true;
             setStatus('思考中...');
@@ -293,6 +326,7 @@
                 });
                 
                 // Call MiniMax Chat API
+                debug('Calling MiniMax Chat API...');
                 const response = await fetch(`https://api.minimax.io/v1/text/chatcompletion_v2?GroupId=${GROUP_ID}`, {
                     method: 'POST',
                     headers: {
@@ -311,6 +345,7 @@
                 });
                 
                 const data = await response.json();
+                debug('Chat API response: ' + JSON.stringify(data).substring(0, 200));
                 
                 if (data.choices && data.choices[0] && data.choices[0].message) {
                     const agentResponse = data.choices[0].message.content;
@@ -323,17 +358,17 @@
                         content: agentResponse
                     });
                     
-                    // Speak the response using browser TTS
+                    // Speak the response using MiniMax TTS via Railway
                     await speak(agentResponse);
                 } else {
-                    console.error('Unexpected API response:', data);
+                    debug('Unexpected API response');
                     const errorMsg = '抱歉，爸爸現在有點累，回應出了點問題...';
                     addToTranscript('agent', errorMsg);
                     await speak(errorMsg);
                 }
                 
             } catch (error) {
-                console.error('Error:', error);
+                debug('Error: ' + error.message);
                 showError('網路錯誤，請稍後再試');
                 const errorResp = '網路連線有點問題，我們稍後再聊。';
                 addToTranscript('agent', errorResp);
@@ -344,33 +379,85 @@
             isProcessing = false;
         }
         
-        // Text to Speech using browser's built-in SpeechSynthesis
-        function speak(text) {
-            return new Promise((resolve) => {
-                if (!synthesis) {
-                    resolve();
-                    return;
+        // Text to Speech using Railway TTS endpoint
+        async function speak(text) {
+            if (!isCallActive) return;
+            
+            debug('Speaking: ' + text.substring(0, 50) + '...');
+            setStatus('爸爸說話中...');
+            isSpeaking = true;
+            
+            try {
+                const response = await fetch(TTS_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        model: 'speech-2.8-hd',
+                        voice: 'Reliable_Executive', // Warm male voice
+                        speed: 1,
+                        emotion: 'warm'
+                    })
+                });
+                
+                debug('TTS Response status: ' + response.status);
+                
+                if (!response.ok) {
+                    throw new Error('TTS API error: ' + response.status);
                 }
                 
-                synthesis.cancel(); // Cancel any ongoing speech
+                // Get audio as blob
+                const audioBlob = await response.blob();
+                debug('Audio blob size: ' + audioBlob.size + ' bytes, type: ' + audioBlob.type);
                 
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'zh-TW';
-                utterance.rate = 0.95;
-                utterance.pitch = 0.9; // Slightly lower pitch for fatherly voice
-                
-                // Try to find a suitable Chinese voice
-                const voices = synthesis.getVoices();
-                const chineseVoice = voices.find(v => v.lang.includes('zh') && v.localService);
-                if (chineseVoice) {
-                    utterance.voice = chineseVoice;
+                if (audioBlob.size === 0) {
+                    throw new Error('Empty audio response');
                 }
                 
-                utterance.onend = () => resolve();
-                utterance.onerror = () => resolve();
+                // Create URL and play
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const audioPlayer = document.getElementById('audioPlayer');
                 
-                synthesis.speak(utterance);
-            });
+                // Stop any current audio
+                if (currentAudio) {
+                    currentAudio.pause();
+                    URL.revokeObjectURL(currentAudio.src);
+                }
+                
+                currentAudio = audioPlayer;
+                audioPlayer.src = audioUrl;
+                
+                // Play and wait for it to finish
+                await new Promise((resolve, reject) => {
+                    audioPlayer.onended = resolve;
+                    audioPlayer.onerror = reject;
+                    audioPlayer.play().catch(reject);
+                });
+                
+                debug('Speech finished');
+                
+            } catch (error) {
+                debug('TTS Error: ' + error.message);
+                console.error('TTS Error:', error);
+            }
+            
+            isSpeaking = false;
+            if (isCallActive) {
+                setStatus('對話中...');
+            }
+        }
+        
+        // Stop current speech
+        function stopSpeech() {
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.pause();
+            if (currentAudio) {
+                URL.revokeObjectURL(currentAudio.src);
+                currentAudio = null;
+            }
+            isSpeaking = false;
         }
         
         // Start call
@@ -383,9 +470,12 @@
             document.getElementById('transcript').classList.add('show');
             document.getElementById('wave').classList.add('show');
             document.getElementById('avatar').classList.add('talking');
+            document.getElementById('debug').classList.add('show');
             document.getElementById('error').textContent = '';
+            document.getElementById('debug').textContent = '';
             
             setStatus('爸爸上線了，開始說話吧！');
+            debug('Starting OpenPapa...');
             
             // Initialize and start speech recognition
             if (!recognition) {
@@ -395,8 +485,9 @@
             if (recognition) {
                 try {
                     recognition.start();
+                    debug('Speech recognition started');
                 } catch (e) {
-                    console.log('Recognition already started');
+                    debug('Recognition already started');
                 }
             }
             
@@ -414,7 +505,7 @@
                 recognition.stop();
             }
             
-            synthesis.cancel();
+            stopSpeech();
             
             document.getElementById('startBtn').style.display = 'inline-block';
             document.getElementById('endBtn').style.display = 'none';
@@ -422,6 +513,7 @@
             document.getElementById('avatar').classList.remove('talking');
             
             setStatus('對話已結束');
+            debug('Call ended');
         }
         
         // Add to transcript
@@ -445,13 +537,6 @@
         // Show error
         function showError(text) {
             document.getElementById('error').textContent = text;
-        }
-        
-        // Load voices
-        if (synthesis) {
-            synthesis.onvoiceschanged = () => {
-                synthesis.getVoices();
-            };
         }
     </script>
 </body>
