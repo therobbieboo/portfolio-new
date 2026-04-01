@@ -517,5 +517,27 @@
             <p>© 2026 Luke Lu · San Francisco, CA</p>
         </footer>
     </div>
-</body>
+
+        <section id="demo" class="section demo-section">
+          <h2>🎮 Try It Now</h2>
+          <div class="demo-container">
+            <div class="demo-input">
+              <input type="text" id="demo-prompt" placeholder="Ask me anything..." />
+              <button onclick="runDemo()">Ask</button>
+            </div>
+            <div id="demo-output" class="demo-output">AI response will appear here</div>
+          </div>
+        </section>
+        <script>
+        async function runDemo() {
+          const prompt = document.getElementById('demo-prompt').value;
+          if (!prompt) return;
+          document.getElementById('demo-output').textContent = "Thinking...";
+          // Demo mode - would connect to backend
+          setTimeout(() => {
+            document.getElementById('demo-output').textContent = "Demo mode: Connect to your AI backend for real responses!";
+          }, 1000);
+        }
+        </script>
+        </body>
 </html>
