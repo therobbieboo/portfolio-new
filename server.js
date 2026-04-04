@@ -1,18 +1,62 @@
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
 const fetch = require('node-fetch');
 
 const PORT = process.env.PORT || process.env.RAILWAY_PORT || 3000;
+const ROOT = __dirname;
 
 // MiniMax config from environment
 const API_KEY = process.env.MINIMAX_API_KEY || "";
 const GROUP_ID = process.env.MINIMAX_GROUP_ID || "2015394789192643334";
 
-// CORS headers - set for all responses
+// MIME types
+const MIME_TYPES = {
+    '.html': 'text/html',
+    '.css': 'text/css',
+    '.js': 'application/javascript',
+    '.json': 'application/json',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.svg': 'image/svg+xml',
+    '.ico': 'image/x-icon'
+};
+
+// CORS headers
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type'
 };
+
+// Send response with CORS headers
+function sendResponse(res, statusCode, contentType, body, extraHeaders = {}) {
+    const headers = { ...CORS_HEADERS, ...extraHeaders };
+    if (contentType) headers['Content-Type'] = contentType;
+    res.writeHead(statusCode, headers);
+    res.end(body);
+}
+
+// Serve static file
+function serveFile(res, filePath) {
+    const ext = path.extname(filePath);
+    const contentType = MIME_TYPES[ext] || 'text/plain';
+    
+    fs.readFile(filePath, (err, data) => {
+        if (err) {
+            // Try index.html for SPA routing
+            fs.readFile(path.join(ROOT, 'index.html'), (err2, data2) => {
+                if (err2) {
+                    sendResponse(res, 404, 'text/plain', 'Not found');
+                } else {
+                    sendResponse(res, 200, 'text/html', data2);
+                }
+            });
+            return;
+        }
+        sendResponse(res, 200, contentType, data);
+    });
+}
 
 // Convert hex to bytes
 function hexToBytes(hex) {
@@ -61,16 +105,10 @@ async function generateTTS(text, options = {}) {
     throw new Error(data.base_resp?.status_msg || 'No audio data');
 }
 
-// Send response with CORS headers
-function sendResponse(res, statusCode, contentType, body) {
-    const headers = { ...CORS_HEADERS };
-    if (contentType) headers['Content-Type'] = contentType;
-    res.writeHead(statusCode, headers);
-    res.end(body);
-}
-
 // HTTP Server
 const server = http.createServer(async (req, res) => {
+    const url = req.url.split('?')[0];
+    
     // Handle CORS preflight
     if (req.method === 'OPTIONS') {
         sendResponse(res, 200, 'application/json', '');
@@ -78,19 +116,13 @@ const server = http.createServer(async (req, res) => {
     }
     
     // Health check
-    if (req.url === '/health' || req.url === '/_health') {
+    if (url === '/health' || url === '/_health') {
         sendResponse(res, 200, 'application/json', JSON.stringify({ status: 'ok', time: Date.now() }));
         return;
     }
     
-    // Root endpoint
-    if (req.url === '/' || req.url === '') {
-        sendResponse(res, 200, 'text/plain', 'OpenPapa TTS Server is running!');
-        return;
-    }
-    
-    // TTS endpoint
-    if (req.url === '/tts' && req.method === 'POST') {
+    // API: TTS endpoint
+    if (url === '/tts' && req.method === 'POST') {
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', async () => {
@@ -115,13 +147,27 @@ const server = http.createServer(async (req, res) => {
         return;
     }
     
+    // Static files (skip API routes)
+    if (!url.startsWith('/api')) {
+        let filePath = path.join(ROOT, url === '/' ? 'portfolio.html' : url);
+        
+        // Security: prevent path traversal
+        if (!filePath.startsWith(ROOT)) {
+            sendResponse(res, 403, 'text/plain', 'Forbidden');
+            return;
+        }
+        
+        serveFile(res, filePath);
+        return;
+    }
+    
     // 404
     sendResponse(res, 404, 'text/plain', 'Not found');
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 TTS Server running on port ${PORT}`);
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`   Frontend: portfolio.html`);
+    console.log(`   API: POST /tts`);
     console.log(`   API Key: ${API_KEY ? 'Set' : 'NOT SET'}`);
-    console.log(`   Endpoint: POST /tts with { "text": "你好" }`);
-    console.log(`   Returns: audio/mp3`);
 });
