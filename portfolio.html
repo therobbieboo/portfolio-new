@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luke Lu | Agentic AI Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,581 +15,371 @@
         }
         
         :root {
-            --bg: #0a0a0f;
-            --card: #12121a;
-            --accent: #00d4aa;
-            --accent-dim: #00d4aa33;
-            --text: #e8e8ed;
-            --text-dim: #8888a0;
-            --border: #2a2a3a;
+            --bg: #f5f3ef;
+            --paper: #ffffff;
+            --ink: #1a1a1a;
+            --ink-light: #4a4a4a;
+            --ink-faint: #8a8a8a;
+            --accent: #6b3a3a;
+            --accent-light: #a65a5a;
+            --line: #d4d0c8;
+        }
+        
+        html {
+            scroll-behavior: smooth;
         }
         
         body {
-            font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
+            color: var(--ink);
+            line-height: 1.7;
+            font-weight: 300;
         }
         
         .container {
-            max-width: 900px;
+            max-width: 760px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 32px;
         }
         
-        /* Hero */
-        .hero {
-            padding: 80px 0 60px;
-            text-align: center;
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Libre Baskerville', Georgia, serif;
+            font-weight: 400;
         }
         
-        .hero h1 {
-            font-size: 3.2rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        h1 {
+            font-size: 2.4rem;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
         }
         
-        .hero .title {
+        h2 {
             font-size: 1.4rem;
-            color: var(--accent);
-            font-weight: 500;
+            margin-bottom: 32px;
+            position: relative;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+        }
+        
+        h3 {
+            font-size: 1.1rem;
             margin-bottom: 8px;
         }
         
-        .hero .subtitle {
-            color: var(--text-dim);
-            font-size: 1.1rem;
-            margin-bottom: 24px;
-        }
-        
-        .hero .contact {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .hero .contact a {
-            color: var(--text-dim);
-            text-decoration: none;
+        p {
+            margin-bottom: 16px;
             font-size: 0.95rem;
-            transition: color 0.2s;
         }
         
-        
-        .hero-stats { display: flex; gap: 32px; justify-content: center; margin-top: 24px; }
-        .stat { text-align: center; }
-        .stat-value { display: block; font-size: 1.8rem; font-weight: 700; color: var(--accent); }
-        .stat-label { font-size: 0.85rem; color: var(--text-dim); }
-        
-        .hero .contact a:hover {
+        a {
             color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+        
+        a:hover {
+            border-color: var(--accent);
+        }
+        
+        /* Header */
+        header {
+            padding: 80px 0 60px;
+        }
+        
+        .header-meta {
+            font-size: 0.8rem;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 16px;
+        }
+        
+        .hero-subtitle {
+            font-family: 'Libre Baskerville', Georgia, serif;
+            font-style: italic;
+            color: var(--ink-light);
+            font-size: 1.1rem;
+            margin-top: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .contact-line {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+        }
+        
+        .contact-line a {
+            color: var(--ink-light);
+        }
+        
+        /* Stats */
+        .stats {
+            display: flex;
+            gap: 48px;
+            margin: 48px 0;
+            padding: 32px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+        
+        .stat-value {
+            font-family: 'Libre Baskerville', Georgia, serif;
+            font-size: 2rem;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
         
         /* Sections */
         section {
-            padding: 48px 0;
-            border-bottom: 1px solid var(--border);
+            padding: 64px 0;
+            border-bottom: 1px solid var(--line);
         }
         
         section:last-child {
             border-bottom: none;
         }
         
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-            color: var(--text);
-        }
-        
-        /* Agent Grid */
-        .agent-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .agent-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-        }
-        .agent-card h3 { margin-bottom: 8px; color: var(--accent); }
-        .agent-badge {
-            display: inline-block;
-            background: var(--accent-dim);
-            color: var(--accent);
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            margin-top: 12px;
-        }
-        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
-        
-        /* Fade-in Animation */
-        .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .pulse { animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
-        
-        /* Experience */
-        .job {
-            margin-bottom: 32px;
-        }
-        
-        .job-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .job-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text);
-        }
-        
-        .job-company {
-            color: var(--accent);
-            font-weight: 500;
-        }
-        
-        .job-period {
-            color: var(--text-dim);
-            font-size: 0.9rem;
-        }
-        
-        .job ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .job li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
-            color: var(--text-dim);
-        }
-        
-        .job li::before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: var(--accent);
+        /* About */
+        .about-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--ink-light);
         }
         
         /* Projects */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+        .project-item {
+            margin-bottom: 48px;
         }
         
-        .project-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-            transition: border-color 0.2s, transform 0.2s;
+        .project-item:last-child {
+            margin-bottom: 0;
         }
         
-        .project-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-        
-        .project-card h3 {
-            font-size: 1.1rem;
+        .project-meta {
+            font-size: 0.75rem;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
             margin-bottom: 8px;
-            color: var(--text);
         }
         
-        .project-card p {
-            color: var(--text-dim);
-            font-size: 0.95rem;
+        .project-desc {
+            color: var(--ink-light);
+            font-size: 0.9rem;
+        }
+        
+        /* Demos - The Core Three */
+        .demo-grid {
+            display: grid;
+            gap: 0;
+        }
+        
+        .demo-item {
+            padding: 40px 0;
+            border-bottom: 1px solid var(--line);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 24px;
+            align-items: start;
+        }
+        
+        .demo-item:last-child {
+            border-bottom: none;
+        }
+        
+        .demo-number {
+            font-family: 'Libre Baskerville', Georgia, serif;
+            font-size: 3rem;
+            color: var(--line);
+            line-height: 1;
+            font-style: italic;
+        }
+        
+        .demo-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+        
+        .demo-content p {
+            font-size: 0.85rem;
+            color: var(--ink-light);
             margin-bottom: 12px;
         }
         
-        .project-card .tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        
-        .project-card .tag {
-            background: var(--accent-dim);
-            color: var(--accent);
-            padding: 4px 10px;
-            border-radius: 4px;
+        .demo-link {
             font-size: 0.8rem;
-        }
-        
-        .project-card .metric {
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-top: 12px;
-        }
-        
-        /* Skills */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-        }
-        
-        .skill-category {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 16px;
-        }
-        
-        .skill-category h3 {
-            font-size: 0.9rem;
-            color: var(--accent);
-            margin-bottom: 8px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.1em;
         }
         
-        .skill-category p {
-            color: var(--text-dim);
-            font-size: 0.95rem;
-        }
-        
-        /* Education */
-        .education {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 24px;
-        }
-        
-        .education h3 {
-            font-size: 1.1rem;
-            margin-bottom: 4px;
-        }
-        
-        .education .school {
-            color: var(--accent);
-            margin-bottom: 8px;
-        }
-        
-        .education .detail {
-            color: var(--text-dim);
-            font-size: 0.95rem;
-        }
-        
-        /* CTA */
-        .cta {
-            text-align: center;
-            padding: 60px 0;
-        }
-        
-        .cta h2 {
-            margin-bottom: 16px;
-        }
-        
-        .cta p {
-            color: var(--text-dim);
-            margin-bottom: 24px;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--bg);
-            padding: 14px 32px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.2s, opacity 0.2s;
-        }
-        
-        .btn:hover {
-            transform: scale(1.02);
-            opacity: 0.9;
+        .demo-link::after {
+            content: ' →';
         }
         
         /* Footer */
         footer {
+            padding: 64px 0;
             text-align: center;
-            padding: 40px 0;
-            color: var(--text-dim);
-            font-size: 0.9rem;
         }
         
+        .footer-note {
+            font-family: 'Libre Baskerville', Georgia, serif;
+            font-style: italic;
+            font-size: 0.85rem;
+            color: var(--ink-faint);
+        }
+        
+        /* Responsive */
         @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 2.2rem;
+            .container {
+                padding: 0 20px;
             }
-            .job-header {
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .stats {
                 flex-direction: column;
+                gap: 24px;
+            }
+            
+            .demo-item {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-number {
+                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Hero -->
-        <div class="hero">
+        <header>
+            <div class="header-meta">Currently based in Berlin</div>
             <h1>Luke Lu</h1>
-            <div class="title">Agentic AI Engineer</div>
-            <div class="subtitle">Princeton PhD | Amazon AGI | Self-Evolving Agents & Agentic Training</div>
-            <div class="contact">
-                <a href="mailto:chienlu@alumni.princeton.edu">chienlu@alumni.princeton.edu</a>
-                <a href="tel:+14185087661">415-508-7661</a>
+            <p class="hero-subtitle">Agentic AI Engineer & Researcher</p>
+            <div class="contact-line">
+                <a href="mailto:luke@openpapa.io">luke@openpapa.io</a>
+                <a href="https://github.com/therobbieboo">GitHub</a>
                 <a href="https://linkedin.com/in/lukelu">LinkedIn</a>
-                <a href="https://github.com/lukelu">GitHub</a>
+            </div>
+        </header>
+        
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-value">50K+</span>
+                <span class="stat-label">MAU</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">8+</span>
+                <span class="stat-label">Years in AI</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value">12</span>
+                <span class="stat-label">Live Products</span>
             </div>
         </div>
-
-        <!-- Summary -->
         
-        <div class="pipeline">
-          <div class="pipeline-step">📥 Input</div>
-          <div class="pipeline-arrow">→</div>
-          <div class="pipeline-step">🔍 Research</div>
-          <div class="pipeline-arrow">→</div>
-          <div class="pipeline-step">🧠 Analysis</div>
-          <div class="pipeline-arrow">→</div>
-          <div class="pipeline-step">📤 Output</div>
-        </div>
-        <section>
+        <section id="about">
             <h2>About</h2>
-            <p style="color: var(--text-dim); font-size: 1.05rem;">
-                Princeton PhD and ML Engineer at Amazon AGI with 5+ years building production AI systems at Big Tech and startups. 
-                Expert in <strong style="color: var(--accent);">Agentic LLM post-training</strong>, <strong style="color: var(--accent);">self-evolving agent systems</strong>, 
-                and <strong style="color: var(--accent);">scalable agent training frameworks</strong>. 
-                Seeking roles in Agentic AI, Self-evolving Agents, Agent Gyms, and AI Infrastructure.
+            <p class="about-text">
+                Building AI systems that reason, evolve, and operate autonomously at scale. 
+                My work spans agentic architectures, self-improving systems, and practical safety measures 
+                for real-world deployment. Previously at ByteDance and startup ecosystems across Asia.
             </p>
         </section>
-
-        <!-- Experience -->
-        <section>
-            <h2>Experience</h2>
+        
+        <section id="projects">
+            <h2>Selected Work</h2>
             
-            <div class="job">
-                <div class="job-header">
-                    <div>
-                        <span class="job-title">Agentic AI Engineer</span>
-                        <span class="job-company"> @ Amazon AGI</span>
-                    </div>
-                    <span class="job-period">Aug 2025 – Present | Sunnyvale, CA</span>
-                </div>
-                <ul>
-                    <li>Architected RL post-training pipelines for 150B+ MoE and dense LLMs, enabling self-evolving agent systems at Amazon scale</li>
-                    <li>Built Agentic Gym orchestrating 10K+ evaluation workflows for multi-turn self-evolving agents, delivering 3x throughput and $2M cost reduction</li>
-                </ul>
+            <div class="project-item">
+                <div class="project-meta">Voice AI / Production</div>
+                <h3>Real-time Voice Agent</h3>
+                <p class="project-desc">
+                    Low-latency conversational AI handling 50K+ monthly users. 
+                    Built with WebRTC, custom VAD, and intelligent backchannel responses.
+                </p>
             </div>
             
-            <div class="job">
-                <div class="job-header">
-                    <div>
-                        <span class="job-title">Research Engineer</span>
-                        <span class="job-company"> @ ByteDance</span>
-                    </div>
-                    <span class="job-period">Jun 2023 – Aug 2025 | San Jose, CA</span>
-                </div>
-                <ul>
-                    <li>Built synthetic data generation platform for self-improving agent training, accelerating model iteration by 29%</li>
-                    <li>Invented multi-agent feedback optimization techniques: 3 first-author + 2 co-authored patents</li>
-                </ul>
+            <div class="project-item">
+                <div class="project-meta">Agentic Systems / Open Source</div>
+                <h3>Agentic Workflow Framework</h3>
+                <p class="project-desc">
+                    Lightweight framework for orchestrating multi-agent systems with built-in 
+                    introspection and self-correction capabilities.
+                </p>
             </div>
             
-            <div class="job">
-                <div class="job-header">
-                    <div>
-                        <span class="job-title">Co-Founder & CTO</span>
-                        <span class="job-company"> @ Unusly</span>
-                    </div>
-                    <span class="job-period">Oct 2019 – May 2023 | San Francisco, CA</span>
-                </div>
-                <ul>
-                    <li>Led development of multimodal AI systems with transformer architectures and RL-style post-training pipelines</li>
-                    <li>Architected self-evolving AI platform generating $100K revenue → IEEE paper, CES showcase, SIGGRAPH feature</li>
-                </ul>
-            </div>
-            
-            <div class="job">
-                <div class="job-header">
-                    <div>
-                        <span class="job-title">R&D Engineer</span>
-                        <span class="job-company"> @ Google (acquired Eyefluence)</span>
-                    </div>
-                    <span class="job-period">Nov 2015 – Jul 2019 | Mountain View, CA</span>
-                </div>
-                <ul>
-                    <li>Developed personalized biometric AI for Pixel: 30% UX improvement, 20% cost reduction → 1 patent</li>
-                    <li>Core technology contributed to Google's acquisition of the startup</li>
-                </ul>
+            <div class="project-item">
+                <div class="project-meta">AI Safety / Research</div>
+                <h3>Alignment Research Platform</h3>
+                <p class="project-desc">
+                    Simulator for studying AI behavior under various alignment constraints. 
+                    Used for empirical research on emergent capabilities.
+                </p>
             </div>
         </section>
-
-        <!-- Projects -->
-        <section>
-            <h2>AI Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <h3>🤖 Agentic Gym Framework</h3>
-                    <p>Scalable agent evaluation infrastructure for training self-evolving agents. Orchestrates 10K+ workflows.</p>
-                    <div class="tags">
-                        <span class="tag">RLHF</span>
-                        <span class="tag">Agent Training</span>
-                        <span class="tag">vLLM</span>
+        
+        <section id="demos">
+            <h2>Interactive Demos</h2>
+            <p style="color: var(--ink-faint); margin-bottom: 32px; font-size: 0.85rem;">
+                Three experiments in agentic intelligence. Each demonstrates a core capability.
+            </p>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <span class="demo-number">I</span>
+                    <div class="demo-content">
+                        <h3>Agentic Learning</h3>
+                        <p>Watch AI agents learn through interaction — trial, error, adaptation. A training arena where agents develop emergent strategies.</p>
+                        <a href="demo-agentic-gym.html" class="demo-link">Open Demo</a>
                     </div>
-                    <div class="metric">3x throughput | $2M savings</div>
                 </div>
                 
-                <div class="project-card">
-                    <h3>🧬 Self-Evolving Agent System</h3>
-                    <p>End-to-end pipeline enabling LLMs to improve themselves through feedback loops and autonomous data generation.</p>
-                    <div class="tags">
-                        <span class="tag">Self-evolving</span>
-                        <span class="tag">Synthetic Data</span>
-                        <span class="tag">RL</span>
+                <div class="demo-item">
+                    <span class="demo-number">II</span>
+                    <div class="demo-content">
+                        <h3>Evolution</h3>
+                        <p>Artificial life evolving in real-time. Genetic algorithms demonstrating adaptation, selection, and the emergence of complexity.</p>
+                        <a href="demo-evolution-lab.html" class="demo-link">Open Demo</a>
                     </div>
-                    <div class="metric">29% faster iteration</div>
                 </div>
                 
-                <div class="project-card">
-                    <h3>⚡ MoE Training Pipeline</h3>
-                    <p>Production RL post-training for 150B+ MoE models. Multi-turn agent loop optimization at Big Tech scale.</p>
-                    <div class="tags">
-                        <span class="tag">Megatron</span>
-                        <span class="tag">PPO/DPO</span>
-                        <span class="tag">Distributed</span>
+                <div class="demo-item">
+                    <span class="demo-number">III</span>
+                    <div class="demo-content">
+                        <h3>Safety</h3>
+                        <p>Alignment and constraint testing in controlled environments. Understanding AI behavior under different safety frameworks.</p>
+                        <a href="demo-8-ai-safety-simulator.html" class="demo-link">Open Demo</a>
                     </div>
-                    <div class="metric">150B+ parameters</div>
-                </div>
-                
-                <div class="project-card">
-                    <h3>🔄 Multimodal Feedback AI</h3>
-                    <p>Personalized AI platform with synthetic data and RL-style post-training. Reached $100K revenue.</p>
-                    <div class="tags">
-                        <span class="tag">Transformers</span>
-                        <span class="tag">Computer Vision</span>
-                        <span class="tag">IEEE</span>
-                    </div>
-                    <div class="metric">$100K revenue | CES & SIGGRAPH</div>
                 </div>
             </div>
         </section>
-
-        <!-- Skills -->
-        <section>
-            <h2>Technical Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Agentic/RL</h3>
-                    <p>RLHF, PPO, DPO, Agentic Gym, Self-evolving agents, Multi-agent RL</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Frameworks</h3>
-                    <p>verl, Slime, Megatron, Ray, vLLM, Transformers, PyTorch</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Infrastructure</h3>
-                    <p>GPU clusters, Distributed training, ML infrastructure, A/B testing</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Languages</h3>
-                    <p>Python, C++, CUDA</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Education -->
-        <section>
-            <h2>Education</h2>
-            <div class="education">
-                <h3>Ph.D., Electrical and Computer Engineering</h3>
-                <div class="school">Princeton University</div>
-                <div class="detail">
-                    Taiwan National Study Abroad Scholarship (full ride) · 5+ papers (500+ citations) · 2 patents · Emil Wolf Best Paper Award
-                </div>
-            </div>
-        </section>
-
-        <!-- Patents -->
-        <section>
-            <h2>Patents</h2>
-            <ul style="list-style: none; padding: 0;">
-                <li style="padding: 8px 0; color: var(--text-dim); border-bottom: 1px solid var(--border);">
-                    <strong style="color: var(--text);">Systems and Methods for Synthetic Data Generation in LLM Training</strong> — First-author
-                </li>
-                <li style="padding: 8px 0; color: var(--text-dim); border-bottom: 1px solid var(--border);">
-                    <strong style="color: var(--text);">Scalable Multi-Agent Reinforcement Learning Infrastructure</strong> — First-author
-                </li>
-                <li style="padding: 8px 0; color: var(--text-dim); border-bottom: 1px solid var(--border);">
-                    <strong style="color: var(--text);">Personalized Biometric Authentication for Mobile Devices</strong> — First-author
-                </li>
-                <li style="padding: 8px 0; color: var(--text-dim);">
-                    <strong style="color: var(--text);">Self-Tuning Feedback Loops for Autonomous Agent Training</strong> — Co-author
-                </li>
-            </ul>
-        </section>
-
-        <!-- CTA -->
-        <div class="cta">
-            <h2>Let's Connect</h2>
-            <p>Looking for opportunities in Agentic AI, Self-evolving Agents, and Agent Infrastructure.</p>
-            <a href="mailto:chienlu@alumni.princeton.edu" class="btn">Get in Touch</a>
-        </div>
-
+        
         <footer>
-            <p>© 2026 Luke Lu · San Francisco, CA</p>
+            <p class="footer-note">Building the future of human-AI collaboration.</p>
         </footer>
     </div>
-
-        <section id="demo" class="section demo-section">
-          <h2>🎮 Try It Now</h2>
-          <div class="demo-container">
-            <div class="demo-input">
-              <input type="text" id="demo-prompt" placeholder="Ask me anything..." />
-              <button onclick="runDemo()">Ask</button>
-            </div>
-            <div id="demo-output" class="demo-output">AI response will appear here</div>
-          </div>
-        </section>
-        
-        <section id="agents" class="section">
-          <h2>🤖 AI Agents</h2>
-          <div class="agent-grid">
-            <div class="agent-card hover-lift">
-              <h3>Voice Agent</h3>
-              <p>Real-time voice conversation with AI — <strong>50K+</strong> MAU</p>
-              <div class="agent-badge">Live Demo</div>
-            </div>
-            <div class="agent-card hover-lift">
-              <h3>Coding Agent</h3>
-              <p>Autonomous code generation & debugging — <strong>1K+</strong> daily users</p>
-              <div class="agent-badge">Beta</div>
-            </div>
-          </div>
-        </section>
-        
-        <script>
-        async function runDemo() {
-          const prompt = document.getElementById('demo-prompt').value;
-          if (!prompt) return;
-          document.getElementById('demo-output').textContent = "Thinking...";
-          // Demo mode - would connect to backend
-          setTimeout(() => {
-            document.getElementById('demo-output').textContent = "Demo mode: Connect to your AI backend for real responses!";
-          }, 1000);
-        }
-        </script>
-        </body>
+</body>
 </html>
