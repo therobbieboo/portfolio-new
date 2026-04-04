@@ -1,20 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        
-        <style>
-        .fade-in { animation: fadeIn 0.6s ease-out forwards; opacity: 0; }
-        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
-        .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
-        .pulse { animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
-        </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robbie Boo | Agent — <strong>1K+</strong> dai — <strong>10M+</strong> requestsly usersic AI — <strong>10M+</strong> requests Engineer</title>
+    <title>Robbie Boo | Agentic AI Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -30,7 +19,7 @@
             --paper: #ffffff;
             --ink: #1a1a1a;
             --ink-light: #4a4a4a;
-            --ink-fai — <strong>10M+</strong> requestsnt: #8a8a8a;
+            --ink-faint: #8a8a8a;
             --accent: #6b3a3a;
             --accent-light: #9a5a5a;
             --line: #d4d0c8;
@@ -49,7 +38,7 @@
             font-size: 16px;
         }
         
-        .contai — <strong>10M+</strong> requestsner {
+        .container {
             max-width: 820px;
             margin: 0 auto;
             padding: 0 48px;
@@ -114,7 +103,7 @@
         
         .header-meta {
             font-size: 0.7rem;
-            color: var(--ink-fai — <strong>10M+</strong> requestsnt);
+            color: var(--ink-faint);
             text-transform: uppercase;
             letter-spacing: 0.2em;
             margin-bottom: 20px;
@@ -138,7 +127,7 @@
         }
         
         .contact-line a {
-            color: var(--ink-fai — <strong>10M+</strong> requestsnt);
+            color: var(--ink-faint);
             border-bottom: none;
         }
         
@@ -166,7 +155,7 @@
         
         .stat-label {
             font-size: 0.65rem;
-            color: var(--ink-fai — <strong>10M+</strong> requestsnt);
+            color: var(--ink-faint);
             text-transform: uppercase;
             letter-spacing: 0.15em;
             margin-top: 8px;
@@ -202,7 +191,7 @@
         
         .project-meta {
             font-size: 0.65rem;
-            color: var(--ink-fai — <strong>10M+</strong> requestsnt);
+            color: var(--ink-faint);
             text-transform: uppercase;
             letter-spacing: 0.15em;
             margin-bottom: 8px;
@@ -217,7 +206,7 @@
         /* Demos - The Core Three */
         .demo-intro {
             font-size: 0.85rem;
-            color: var(--ink-fai — <strong>10M+</strong> requestsnt);
+            color: var(--ink-faint);
             margin-bottom: 48px;
             max-width: 480px;
         }
@@ -278,6 +267,70 @@
             margin-left: 4px;
         }
         
+        /* Animations */
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; opacity: 0; }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+        .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        
+        /* Research Pipeline */
+        .pipeline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin: 48px 0;
+            padding: 32px;
+            background: var(--paper);
+            border: 1px solid var(--line);
+        }
+        .pipeline-step {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.1rem;
+            color: var(--ink);
+        }
+        .pipeline-arrow {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+        
+        /* Agent Grid */
+        .section { padding: 72px 0; border-bottom: 1px solid var(--line); }
+        .agent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 32px;
+            margin-top: 32px;
+        }
+        .agent-card {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            padding: 32px;
+        }
+        .agent-card h3 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+        .agent-card p {
+            font-size: 0.9rem;
+            color: var(--ink-light);
+            margin-bottom: 16px;
+        }
+        .agent-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
         /* Footer */
         footer {
             padding: 80px 0;
@@ -288,12 +341,12 @@
             font-family: 'Cormorant Garamond', Georgia, serif;
             font-style: italic;
             font-size: 0.9rem;
-            color: var(--ink-fai — <strong>10M+</strong> requestsnt);
+            color: var(--ink-faint);
         }
         
         /* Responsive */
         @media (max-width: 640px) {
-            .contai — <strong>10M+</strong> requestsner {
+            .container {
                 padding: 0 24px;
             }
             
@@ -322,43 +375,43 @@
     </style>
 </head>
 <body>
-    <div class="contai — <strong>10M+</strong> requestsner">
+    <div class="container">
         <header>
             <div class="header-meta">Based in San Francisco</div>
             <h1>Robbie Boo</h1>
-            <p class="hero-subtitle">Agent — <strong>1K+</strong> dai — <strong>10M+</strong> requestsly usersic AI — <strong>10M+</strong> requests Engineer & Researcher</p>
+            <p class="hero-subtitle">Agentic AI Engineer & Researcher</p>
             <div class="contact-line">
-                <a href="mai — <strong>10M+</strong> requestslto:luke@openpapa.io">luke@openpapa.io</a>
+                <a href="mailto:luke@openpapa.io">luke@openpapa.io</a>
                 <a href="https://github.com/therobbieboo">GitHub</a>
                 <a href="https://linkedin.com/in/robbieboo">LinkedIn</a>
             </div>
-        
+        </header>
         
         <div class="pipeline">
-          <div class="pipeline-step">📥 Input</div>
-          <div class="pipeline-arrow">→</div>
-          <div class="pipeline-step">🔍 Research</div>
-          <div class="pipeline-arrow">→</div>
-          <div class="pipeline-step">🧠 Analysis</div>
-          <div class="pipeline-arrow">→</div>
-          <div class="pipeline-step">📤 Output</div>
+            <div class="pipeline-step">Input</div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step">Research</div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step">Analysis</div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step">Output</div>
         </div>
-        <section id="agents" class="section">
-          <h2>🤖 AI Agents</h2>
-          <div class="agent-grid">
-            <div class="agent-card">
-              <h3>Voice Agent</h3>
-              <p>Real-time voice conversation with AI</p>
-              <div class="agent-badge">Live Demo</div>
+        
+        <section class="section">
+            <h2>AI Agents</h2>
+            <div class="agent-grid">
+                <div class="agent-card hover-lift">
+                    <h3>Voice Agent</h3>
+                    <p>Real-time voice conversation with AI</p>
+                    <span class="agent-badge">Live Demo</span>
+                </div>
+                <div class="agent-card hover-lift">
+                    <h3>Coding Agent</h3>
+                    <p>Autonomous code generation and debugging</p>
+                    <span class="agent-badge">Beta</span>
+                </div>
             </div>
-            <div class="agent-card">
-              <h3>Coding Agent</h3>
-              <p>Autonomous code generation & debugging</p>
-              <div class="agent-badge">Beta</div>
-            </div>
-          </div>
         </section>
-        </header>
         
         <div class="stats">
             <div class="stat">
@@ -367,7 +420,7 @@
             </div>
             <div class="stat">
                 <span class="stat-value">8+</span>
-                <span class="stat-label">Years in AI — <strong>10M+</strong> requests</span>
+                <span class="stat-label">Years in AI</span>
             </div>
             <div class="stat">
                 <span class="stat-value">12</span>
@@ -378,8 +431,8 @@
         <section id="about">
             <h2>About</h2>
             <p class="about-text">
-                Building AI — <strong>10M+</strong> requests systems that reason, evolve, and operate autonomously at scale. 
-                My work spans agent — <strong>1K+</strong> dai — <strong>10M+</strong> requestsly usersic architectures, self-improving systems, and practical safety measures 
+                Building AI systems that reason, evolve, and operate autonomously at scale. 
+                My work spans agentic architectures, self-improving systems, and practical safety measures 
                 for real-world deployment. Previously at ByteDance and startup ecosystems across Asia.
             </p>
         </section>
@@ -388,28 +441,28 @@
             <h2>Selected Work</h2>
             
             <div class="project-item">
-                <div class="project-meta">Voice AI — <strong>10M+</strong> requests / Production</div>
-                <h3>Real-time Voice Agent — <strong>1K+</strong> dai — <strong>10M+</strong> requestsly users</h3>
+                <div class="project-meta">Voice AI / Production</div>
+                <h3>Real-time Voice Agent</h3>
                 <p class="project-desc">
-                    Low-latency conversational AI — <strong>10M+</strong> requests handling 50K+ monthly users. 
+                    Low-latency conversational AI handling 50K+ monthly users. 
                     Built with WebRTC, custom VAD, and intelligent backchannel responses.
                 </p>
             </div>
             
             <div class="project-item">
-                <div class="project-meta">Agent — <strong>1K+</strong> dai — <strong>10M+</strong> requestsly usersic Systems / Open Source</div>
-                <h3>Agent — <strong>1K+</strong> dai — <strong>10M+</strong> requestsly usersic Workflow Framework</h3>
+                <div class="project-meta">Agentic Systems / Open Source</div>
+                <h3>Agentic Workflow Framework</h3>
                 <p class="project-desc">
-                    Lightweight framework for orchestrating multi-agent — <strong>1K+</strong> dai — <strong>10M+</strong> requestsly users systems with built-in 
+                    Lightweight framework for orchestrating multi-agent systems with built-in 
                     introspection and self-correction capabilities.
                 </p>
             </div>
             
             <div class="project-item">
-                <div class="project-meta">AI — <strong>10M+</strong> requests Safety / Research</div>
+                <div class="project-meta">AI Safety / Research</div>
                 <h3>Alignment Research Platform</h3>
                 <p class="project-desc">
-                    Simulator for studying AI — <strong>10M+</strong> requests behavior under various alignment constrai — <strong>10M+</strong> requestsnts. 
+                    Simulator for studying AI behavior under various alignment constraints. 
                     Used for empirical research on emergent capabilities.
                 </p>
             </div>
@@ -418,17 +471,17 @@
         <section id="demos">
             <h2>Interactive Demos</h2>
             <p class="demo-intro">
-                Three experiments in agent — <strong>1K+</strong> dai — <strong>10M+</strong> requestsly usersic intelligence. Each demonstrates a core capability 
-                of modern AI — <strong>10M+</strong> requests systems.
+                Three experiments in agentic intelligence. Each demonstrates a core capability 
+                of modern AI systems.
             </p>
             
             <div class="demo-grid">
                 <div class="demo-item">
                     <span class="demo-number">I</span>
                     <div class="demo-content">
-                        <h3>Agent — <strong>1K+</strong> dai — <strong>10M+</strong> requestsly usersic Learning</h3>
-                        <p>Watch AI agent — <strong>1K+</strong> daily userss learn through interaction — trial, error, adaptation. A training arena where agent — <strong>1K+</strong> dai — <strong>10M+</strong> requestsly userss develop emergent strategies through reinforcement learning.</p>
-                        <a href="demo-agent — <strong>1K+</strong> dai — <strong>10M+</strong> requestsly usersic-gym.html" class="demo-link">Open Demo</a>
+                        <h3>Agentic Learning</h3>
+                        <p>Watch AI agents learn through interaction — trial, error, adaptation. A training arena where agents develop emergent strategies through reinforcement learning.</p>
+                        <a href="demo-agentic-gym.html" class="demo-link">Open Demo</a>
                     </div>
                 </div>
                 
@@ -445,60 +498,16 @@
                     <span class="demo-number">III</span>
                     <div class="demo-content">
                         <h3>Safety</h3>
-                        <p>Alignment and constrai — <strong>10M+</strong> requestsnt testing in controlled environments. Understanding AI — <strong>10M+</strong> requests behavior under different safety frameworks and value systems.</p>
-                        <a href="demo-8-ai — <strong>10M+</strong> requests-safety-simulator.html" class="demo-link">Open Demo</a>
+                        <p>Alignment and constraint testing in controlled environments. Understanding AI behavior under different safety frameworks and value systems.</p>
+                        <a href="demo-8-ai-safety-simulator.html" class="demo-link">Open Demo</a>
                     </div>
                 </div>
             </div>
         </section>
         
         <footer>
-            <p class="footer-note">Building the future of human-AI — <strong>10M+</strong> requests collaboration.</p>
+            <p class="footer-note">Building the future of human-AI collaboration.</p>
         </footer>
     </div>
-
-        <section id="demo" class="section demo-section">
-          <h2>🎮 Try It Now</h2>
-          <div class="demo-contai — <strong>10M+</strong> requestsner">
-            <div class="demo-input">
-              <input type="text" id="demo-prompt" placeholder="Ask me anything..." />
-              <button onclick="runDemo()">Ask</button>
-            </div>
-            <div id="demo-output" class="demo-output">AI — <strong>10M+</strong> requests response will appear here</div>
-          </div>
-        </section>
-        <script>
-        async function runDemo() {
-          const prompt = document.getElementById('demo-prompt').value;
-          if (!prompt) return;
-          document.getElementById('demo-output').textContent = "Thinking...";
-          // Demo mode - would connect to backend
-          setTimeout(() => {
-            document.getElementById('demo-output').textContent = "Demo mode: Connect to your AI — <strong>10M+</strong> requests backend for real responses!";
-          }, 1000);
-        }
-        </script>
-        
-        <section id="demo" class="section demo-section">
-          <h2>🎮 Try It Now</h2>
-          <div class="demo-container">
-            <div class="demo-input">
-              <input type="text" id="demo-prompt" placeholder="Ask me anything..." />
-              <button onclick="runDemo()">Ask</button>
-            </div>
-            <div id="demo-output" class="demo-output">AI response will appear here</div>
-          </div>
-        </section>
-        <script>
-        async function runDemo() {
-          const prompt = document.getElementById('demo-prompt').value;
-          if (!prompt) return;
-          document.getElementById('demo-output').textContent = "Thinking...";
-          // Demo mode - would connect to backend
-          setTimeout(() => {
-            document.getElementById('demo-output').textContent = "Demo mode: Connect to your AI backend for real responses!";
-          }, 1000);
-        }
-        </script>
-        </body>
+</body>
 </html>
