@@ -15,14 +15,12 @@
         }
         
         :root {
-            --bg: #f5f3ef;
-            --paper: #ffffff;
-            --ink: #1a1a1a;
-            --ink-light: #4a4a4a;
-            --ink-faint: #8a8a8a;
-            --accent: #6b3a3a;
-            --accent-light: #a65a5a;
-            --line: #d4d0c8;
+            --bg: #2C2C2C;
+            --paper: #f5f3ef;
+            --ink: #FFFFFF;
+            --ink-light: #EAE7E1;
+            --accent: #5B6E00;
+            --line: #D4D0C8;
         }
         
         html {
@@ -30,11 +28,12 @@
         }
         
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--ink);
             line-height: 1.7;
             font-weight: 300;
+            padding: 0 20px;
         }
         
         .container {
@@ -50,79 +49,34 @@
         }
         
         h1 {
-            font-size: 2.4rem;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
+            font-size: 2.8rem;
+            margin-bottom: 32px;
         }
         
         h2 {
-            font-size: 1.4rem;
-            margin-bottom: 32px;
-            position: relative;
-        }
-        
-        h2::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -8px;
-            width: 40px;
-            height: 1px;
-            background: var(--accent);
+            font-size: 1.6rem;
+            margin-bottom: 16px;
         }
         
         h3 {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin-bottom: 8px;
         }
         
         p {
-            margin-bottom: 16px;
-            font-size: 0.95rem;
+            margin-bottom: 20px;
+            font-size: 1rem;
         }
         
         a {
             color: var(--accent);
             text-decoration: none;
-            border-bottom: 1px solid transparent;
             transition: border-color 0.2s;
-        }
-        
-        a:hover {
-            border-color: var(--accent);
         }
         
         /* Header */
         header {
             padding: 80px 0 60px;
-        }
-        
-        .header-meta {
-            font-size: 0.8rem;
-            color: var(--ink-faint);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-bottom: 16px;
-        }
-        
-        .hero-subtitle {
-            font-family: 'Libre Baskerville', Georgia, serif;
-            font-style: italic;
-            color: var(--ink-light);
-            font-size: 1.1rem;
-            margin-top: 16px;
-            margin-bottom: 32px;
-        }
-        
-        .contact-line {
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
-            font-size: 0.85rem;
-        }
-        
-        .contact-line a {
-            color: var(--ink-light);
         }
         
         /* Stats */
@@ -135,15 +89,18 @@
             border-bottom: 1px solid var(--line);
         }
         
-        .stat-value {
+        .stat {
             font-family: 'Libre Baskerville', Georgia, serif;
-            font-size: 2rem;
-            display: block;
+            color: var(--ink-light);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
         }
         
         .stat-label {
             font-size: 0.75rem;
-            color: var(--ink-faint);
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
@@ -151,132 +108,28 @@
         /* Sections */
         section {
             padding: 64px 0;
-            border-bottom: 1px solid var(--line);
+            margin: 40px 0;
         }
         
         section:last-child {
-            border-bottom: none;
-        }
-        
-        /* About */
-        .about-text {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: var(--ink-light);
-        }
-        
-        /* Projects */
-        .project-item {
-            margin-bottom: 48px;
-        }
-        
-        .project-item:last-child {
             margin-bottom: 0;
-        }
-        
-        .project-meta {
-            font-size: 0.75rem;
-            color: var(--ink-faint);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 8px;
-        }
-        
-        .project-desc {
-            color: var(--ink-light);
-            font-size: 0.9rem;
-        }
-        
-        /* Demos - The Core Three */
-        .demo-grid {
-            display: grid;
-            gap: 0;
-        }
-        
-        .demo-item {
-            padding: 40px 0;
-            border-bottom: 1px solid var(--line);
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 24px;
-            align-items: start;
-        }
-        
-        .demo-item:last-child {
-            border-bottom: none;
-        }
-        
-        .demo-number {
-            font-family: 'Libre Baskerville', Georgia, serif;
-            font-size: 3rem;
-            color: var(--line);
-            line-height: 1;
-            font-style: italic;
-        }
-        
-        .demo-content h3 {
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-        }
-        
-        .demo-content p {
-            font-size: 0.85rem;
-            color: var(--ink-light);
-            margin-bottom: 12px;
-        }
-        
-        .demo-link {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-        
-        .demo-link::after {
-            content: ' →';
         }
         
         /* Footer */
         footer {
-            padding: 64px 0;
+            padding: 40px 0;
             text-align: center;
         }
         
         .footer-note {
             font-family: 'Libre Baskerville', Georgia, serif;
-            font-style: italic;
-            font-size: 0.85rem;
-            color: var(--ink-faint);
-        }
-        
-        /* Responsive */
-        @media (max-width: 600px) {
-            .container {
-                padding: 0 20px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .stats {
-                flex-direction: column;
-                gap: 24px;
-            }
-            
-            .demo-item {
-                grid-template-columns: 1fr;
-            }
-            
-            .demo-number {
-                font-size: 2rem;
-            }
+            color: var(--ink-light);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="header-meta">Currently based in Berlin</div>
             <h1>Robbie Boo</h1>
             <p class="hero-subtitle">Agentic AI Engineer & Researcher</p>
             <div class="contact-line">
@@ -284,32 +137,6 @@
                 <a href="https://github.com/therobbieboo">GitHub</a>
                 <a href="https://linkedin.com/in/robbieboo">LinkedIn</a>
             </div>
-        
-        
-        <div class="pipeline">
-          <div class="pipeline-step">📥 Input</div>
-          <div class="pipeline-arrow">→</div>
-          <div class="pipeline-step">🔍 Research</div>
-          <div class="pipeline-arrow">→</div>
-          <div class="pipeline-step">🧠 Analysis</div>
-          <div class="pipeline-arrow">→</div>
-          <div class="pipeline-step">📤 Output</div>
-        </div>
-        <section id="agents" class="section">
-          <h2>🤖 AI Agents</h2>
-          <div class="agent-grid">
-            <div class="agent-card">
-              <h3>Voice Agent</h3>
-              <p>Real-time voice conversation with AI</p>
-              <div class="agent-badge">Live Demo</div>
-            </div>
-            <div class="agent-card">
-              <h3>Coding Agent</h3>
-              <p>Autonomous code generation & debugging</p>
-              <div class="agent-badge">Beta</div>
-            </div>
-          </div>
-        </section>
         </header>
         
         <div class="stats">
@@ -329,77 +156,26 @@
         
         <section id="about">
             <h2>About</h2>
-            <p class="about-text">
-                Building AI systems that reason, evolve, and operate autonomously at scale. 
-                My work spans agentic architectures, self-improving systems, and practical safety measures 
-                for real-world deployment. Previously at ByteDance and startup ecosystems across Asia.
-            </p>
+            <p class="about-text">Building AI systems that reason, evolve, and operate autonomously at scale. My work spans agentic architectures, self-improving systems, and practical safety measures for real-world deployment.</p>
         </section>
         
         <section id="projects">
             <h2>Selected Work</h2>
+            <p class="project-desc">A summary of my projects in AI and agentic systems.</p>
             
             <div class="project-item">
-                <div class="project-meta">Voice AI / Production</div>
                 <h3>Real-time Voice Agent</h3>
-                <p class="project-desc">
-                    Low-latency conversational AI handling 50K+ monthly users. 
-                    Built with WebRTC, custom VAD, and intelligent backchannel responses.
-                </p>
+                <p class="project-desc">Low-latency conversational AI handling 50K+ monthly users.</p>
             </div>
             
             <div class="project-item">
-                <div class="project-meta">Agentic Systems / Open Source</div>
                 <h3>Agentic Workflow Framework</h3>
-                <p class="project-desc">
-                    Lightweight framework for orchestrating multi-agent systems with built-in 
-                    introspection and self-correction capabilities.
-                </p>
+                <p class="project-desc">Lightweight framework for orchestrating multi-agent systems.</p>
             </div>
             
             <div class="project-item">
-                <div class="project-meta">AI Safety / Research</div>
                 <h3>Alignment Research Platform</h3>
-                <p class="project-desc">
-                    Simulator for studying AI behavior under various alignment constraints. 
-                    Used for empirical research on emergent capabilities.
-                </p>
-            </div>
-        </section>
-        
-        <section id="demos">
-            <h2>Interactive Demos</h2>
-            <p style="color: var(--ink-faint); margin-bottom: 32px; font-size: 0.85rem;">
-                Three experiments in agentic intelligence. Each demonstrates a core capability.
-            </p>
-            
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <span class="demo-number">I</span>
-                    <div class="demo-content">
-                        <h3>Agentic Learning</h3>
-                        <p>Watch AI agents learn through interaction — trial, error, adaptation. A training arena where agents develop emergent strategies.</p>
-                        <a href="demo-agentic-gym.html" class="demo-link">Open Demo</a>
-                    </div>
-                </div>
-                
-                <div class="demo-item">
-                    <span class="demo-number">II</span>
-                    <div class="demo-content">
-                        <h3>Evolution</h3>
-                        <p>Artificial life evolving in real-time. Genetic algorithms demonstrating adaptation, selection, and the emergence of complexity.</p>
-                        <a href="demo-evolution-lab.html" class="demo-link">Open Demo</a>
-                    </div>
-                </div>
-                
-                <div class="demo-item">
-                    <span class="demo-number">III</span>
-                    <div class="demo-content">
-                        <h3>Safety</h3>
-                        <p>Alignment and constraint testing in controlled environments. Understanding AI behavior under different safety frameworks.</p>
-                        <a href="demo-8-ai-safety-simulator.html" class="demo-link">Open Demo</a>
-                    </div>
-                </div>
+                <p class="project-desc">Simulator for studying AI behavior under various alignment constraints.</p>
             </div>
         </section>
         
