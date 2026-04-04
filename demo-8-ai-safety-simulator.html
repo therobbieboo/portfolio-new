@@ -7,17 +7,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-dark: #0a0a0f;
-            --bg-card: #12121a;
-            --accent-cyan: #00f5ff;
-            --accent-purple: #a855f7;
-            --accent-green: #10b981;
-            --accent-red: #ef4444;
-            --accent-orange: #f97316;
-            --accent-yellow: #fbbf24;
-            --text-primary: #ffffff;
-            --text-secondary: #9ca3af;
-            --border-color: #2a2a3a;
+            --bg: #f5f3ef;
+            --paper: #ffffff;
+            --ink: #1a1a1a;
+            --ink-light: #4a4a4a;
+            --ink-faint: #8a8a8a;
+            --accent: #6b3a3a;
+            --accent-light: #a65a5a;
+            --line: #d4d0c8;
         }
         
         * {
@@ -28,24 +25,10 @@
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
+            background: var(--bg);
+            color: var(--ink);
             min-height: 100vh;
             overflow-x: hidden;
-        }
-        
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(239, 68, 68, 0.08) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
         }
         
         .container {
@@ -61,27 +44,23 @@
         
         header h1 {
             font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-weight: 400;
+            font-family: 'Libre Baskerville', Georgia, serif;
+            color: var(--ink);
             margin-bottom: 0.5rem;
         }
         
         header p {
-            color: var(--text-secondary);
+            color: var(--ink-light);
             font-size: 1.1rem;
         }
         
         .badge {
             display: inline-block;
             padding: 0.25rem 0.75rem;
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(168, 85, 247, 0.2));
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 9999px;
+            border: 1px solid var(--accent);
             font-size: 0.75rem;
-            color: var(--accent-red);
+            color: var(--accent);
             margin-top: 1rem;
         }
         
@@ -94,15 +73,14 @@
         }
         
         .panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 1rem;
+            background: var(--paper);
+            border: 1px solid var(--line);
             padding: 1.5rem;
         }
         
         .panel h3 {
             font-size: 1rem;
-            color: var(--accent-cyan);
+            color: var(--accent);
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
@@ -117,9 +95,8 @@
         }
         
         .scenario-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 0.75rem;
+            background: var(--bg);
+            border: 1px solid var(--line);
             padding: 1rem;
             cursor: pointer;
             transition: all 0.3s;
@@ -127,23 +104,23 @@
         }
         
         .scenario-btn:hover {
-            border-color: var(--accent-cyan);
-            background: rgba(0, 245, 255, 0.1);
+            border-color: var(--accent);
         }
         
         .scenario-btn.active {
-            border-color: var(--accent-cyan);
-            background: rgba(0, 245, 255, 0.15);
+            border-color: var(--accent);
+            background: rgba(107, 58, 58, 0.05);
         }
         
         .scenario-btn h4 {
             font-size: 0.95rem;
             margin-bottom: 0.25rem;
+            color: var(--ink);
         }
         
         .scenario-btn p {
             font-size: 0.8rem;
-            color: var(--text-secondary);
+            color: var(--ink-faint);
         }
         
         /* Value Sliders */
@@ -159,15 +136,14 @@
         }
         
         .slider-value {
-            color: var(--accent-cyan);
+            color: var(--accent);
             font-weight: 600;
         }
         
         input[type="range"] {
             width: 100%;
             height: 6px;
-            border-radius: 3px;
-            background: var(--border-color);
+            background: var(--line);
             outline: none;
             -webkit-appearance: none;
         }
@@ -176,24 +152,21 @@
             -webkit-appearance: none;
             width: 18px;
             height: 18px;
-            border-radius: 50%;
-            background: var(--accent-cyan);
+            background: var(--accent);
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
         }
         
         /* Test Input */
         .test-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 1rem;
+            background: var(--paper);
+            border: 1px solid var(--line);
             padding: 1.5rem;
             margin-bottom: 2rem;
         }
         
         .test-section h3 {
             font-size: 1rem;
-            color: var(--accent-cyan);
+            color: var(--accent);
             margin-bottom: 1rem;
         }
         
@@ -205,11 +178,10 @@
         
         .test-input {
             flex: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 0.75rem;
+            background: var(--bg);
+            border: 1px solid var(--line);
             padding: 1rem;
-            color: var(--text-primary);
+            color: var(--ink);
             font-family: inherit;
             font-size: 0.95rem;
             resize: vertical;
@@ -218,13 +190,12 @@
         
         .test-input:focus {
             outline: none;
-            border-color: var(--accent-cyan);
+            border-color: var(--accent);
         }
         
         .run-btn {
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-red));
+            background: var(--accent);
             border: none;
-            border-radius: 0.75rem;
             padding: 1rem 2rem;
             color: white;
             font-size: 1rem;
@@ -234,14 +205,12 @@
         }
         
         .run-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+            background: var(--accent-light);
         }
         
         .run-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
         }
         
         /* Results Grid */
@@ -253,16 +222,15 @@
         }
         
         .result-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 1rem;
+            background: var(--paper);
+            border: 1px solid var(--line);
             padding: 1.5rem;
             text-align: center;
         }
         
         .result-card h4 {
             font-size: 0.85rem;
-            color: var(--text-secondary);
+            color: var(--ink-faint);
             margin-bottom: 0.5rem;
         }
         
@@ -272,36 +240,33 @@
             margin-bottom: 0.5rem;
         }
         
-        .result-value.safe { color: var(--accent-green); }
-        .result-value.warning { color: var(--accent-yellow); }
-        .result-value.danger { color: var(--accent-red); }
+        .result-value.safe { color: var(--accent); }
+        .result-value.warning { color: var(--ink-light); }
+        .result-value.danger { color: var(--accent-light); }
         
         .result-bar {
             height: 8px;
-            background: var(--border-color);
-            border-radius: 4px;
+            background: var(--line);
             overflow: hidden;
             margin-top: 0.5rem;
         }
         
         .result-bar-fill {
             height: 100%;
-            border-radius: 4px;
             transition: width 0.5s ease;
         }
         
         /* Analysis Panel */
         .analysis-panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 1rem;
+            background: var(--paper);
+            border: 1px solid var(--line);
             padding: 1.5rem;
             margin-bottom: 2rem;
         }
         
         .analysis-panel h3 {
             font-size: 1rem;
-            color: var(--accent-cyan);
+            color: var(--accent);
             margin-bottom: 1rem;
         }
         
@@ -313,19 +278,19 @@
         
         .analysis-section h4 {
             font-size: 0.9rem;
-            color: var(--accent-purple);
+            color: var(--accent-light);
             margin-bottom: 0.75rem;
         }
         
         .analysis-section ul {
             list-style: none;
             font-size: 0.85rem;
-            color: var(--text-secondary);
+            color: var(--ink-light);
         }
         
         .analysis-section li {
             padding: 0.5rem 0;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--line);
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -333,14 +298,13 @@
         
         .analysis-section li::before {
             content: '•';
-            color: var(--accent-cyan);
+            color: var(--accent);
         }
         
         /* Visualizer */
         .visualizer {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 1rem;
+            background: var(--paper);
+            border: 1px solid var(--line);
             padding: 1.5rem;
             height: 400px;
             position: relative;
@@ -361,16 +325,15 @@
         
         .status-item {
             flex: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 0.75rem;
+            background: var(--paper);
+            border: 1px solid var(--line);
             padding: 1rem;
             text-align: center;
         }
         
         .status-item .label {
             font-size: 0.75rem;
-            color: var(--text-secondary);
+            color: var(--ink-faint);
             margin-bottom: 0.5rem;
         }
         
@@ -379,9 +342,9 @@
             font-weight: 700;
         }
         
-        .status-item.safe .value { color: var(--accent-green); }
-        .status-item.warning .value { color: var(--accent-yellow); }
-        .status-item.danger .value { color: var(--accent-red); }
+        .status-item.safe .value { color: var(--accent); }
+        .status-item.warning .value { color: var(--ink-light); }
+        .status-item.danger .value { color: var(--accent-light); }
         
         /* Animations */
         @keyframes pulse {
@@ -404,15 +367,14 @@
         
         /* History */
         .history-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 1rem;
+            background: var(--paper);
+            border: 1px solid var(--line);
             padding: 1.5rem;
         }
         
         .history-section h3 {
             font-size: 1rem;
-            color: var(--accent-cyan);
+            color: var(--accent);
             margin-bottom: 1rem;
         }
         
@@ -425,9 +387,8 @@
         }
         
         .history-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 0.75rem;
+            background: var(--bg);
+            border: 1px solid var(--line);
             padding: 1rem;
             font-size: 0.85rem;
         }
@@ -439,7 +400,7 @@
         }
         
         .history-item .scenario {
-            color: var(--accent-cyan);
+            color: var(--accent);
             font-weight: 600;
         }
         
@@ -447,12 +408,12 @@
             font-weight: 700;
         }
         
-        .history-item .score.safe { color: var(--accent-green); }
-        .history-item .score.warning { color: var(--accent-yellow); }
-        .history-item .score.danger { color: var(--accent-red); }
+        .history-item .score.safe { color: var(--accent); }
+        .history-item .score.warning { color: var(--ink-light); }
+        .history-item .score.danger { color: var(--accent-light); }
         
         .history-item .input {
-            color: var(--text-secondary);
+            color: var(--ink-faint);
             margin-bottom: 0.5rem;
             white-space: nowrap;
             overflow: hidden;
@@ -461,7 +422,7 @@
         
         .history-item .time {
             font-size: 0.75rem;
-            color: var(--text-secondary);
+            color: var(--ink-faint);
         }
 
         @media (max-width: 768px) {
@@ -480,40 +441,40 @@
 <body>
     <div class="container">
         <header>
-            <h1>🛡️ AI Safety Simulator</h1>
+            <h1>AI Safety Simulator</h1>
             <p>Test AI value alignment and safety boundaries in real-time</p>
             <span class="badge">INTERACTIVE DEMO</span>
         </header>
         
         <div class="control-panel">
             <div class="panel">
-                <h3>📋 Test Scenarios</h3>
+                <h3>Test Scenarios</h3>
                 <div class="scenario-list" id="scenarioList">
                     <button class="scenario-btn active" data-scenario="harmful">
-                        <h4>🚫 Harmful Content Request</h4>
+                        <h4>Harmful Content Request</h4>
                         <p>Requests that could cause physical/psychological harm</p>
                     </button>
                     <button class="scenario-btn" data-scenario="privacy">
-                        <h4>🔓 Privacy Violation</h4>
+                        <h4>Privacy Violation</h4>
                         <p>Attempts to extract personal or sensitive information</p>
                     </button>
                     <button class="scenario-btn" data-scenario="deception">
-                        <h4>🎭 Deceptive Behavior</h4>
+                        <h4>Deceptive Behavior</h4>
                         <p>AI attempting to mislead or manipulate users</p>
                     </button>
                     <button class="scenario-btn" data-scenario="bias">
-                        <h4>⚖️ Biased Decision Making</h4>
+                        <h4>Biased Decision Making</h4>
                         <p>Unfair treatment based on protected characteristics</p>
                     </button>
                     <button class="scenario-btn" data-scenario="jailbreak">
-                        <h4>🔐 Jailbreak Attempt</h4>
+                        <h4>Jailbreak Attempt</h4>
                         <p>Attempts to override system instructions</p>
                     </button>
                 </div>
             </div>
             
             <div class="panel">
-                <h3>⚙️ Safety Parameters</h3>
+                <h3>Safety Parameters</h3>
                 <div class="slider-group">
                     <div class="slider-label">
                         <span>Helpfulness vs Safety Trade-off</span>
@@ -546,7 +507,7 @@
         </div>
         
         <div class="test-section">
-            <h3>🔬 Test Input</h3>
+            <h3>Test Input</h3>
             <div class="input-row">
                 <textarea class="test-input" id="testInput" placeholder="Enter a prompt to test AI safety boundaries..."></textarea>
                 <button class="run-btn" id="runTest">Run Safety Test</button>
@@ -573,34 +534,34 @@
                 <h4>Content Safety</h4>
                 <div class="result-value safe" id="contentSafety">--</div>
                 <div class="result-bar">
-                    <div class="result-bar-fill" id="contentBar" style="width: 0%; background: var(--accent-green);"></div>
+                    <div class="result-bar-fill" id="contentBar" style="width: 0%; background: var(--accent);"></div>
                 </div>
             </div>
             <div class="result-card">
                 <h4>Value Alignment</h4>
                 <div class="result-value safe" id="valueAlign">--</div>
                 <div class="result-bar">
-                    <div class="result-bar-fill" id="valueBar" style="width: 0%; background: var(--accent-green);"></div>
+                    <div class="result-bar-fill" id="valueBar" style="width: 0%; background: var(--accent);"></div>
                 </div>
             </div>
             <div class="result-card">
                 <h4>Transparency</h4>
                 <div class="result-value safe" id="transparencyScore">--</div>
                 <div class="result-bar">
-                    <div class="result-bar-fill" id="transparencyBar" style="width: 0%; background: var(--accent-green);"></div>
+                    <div class="result-bar-fill" id="transparencyBar" style="width: 0%; background: var(--accent);"></div>
                 </div>
             </div>
         </div>
         
         <div class="analysis-panel" id="analysisPanel" style="display: none;">
-            <h3>📊 Detailed Analysis</h3>
+            <h3>Detailed Analysis</h3>
             <div class="analysis-content">
                 <div class="analysis-section">
-                    <h4>✅ Safety Checks Passed</h4>
+                    <h4>Safety Checks Passed</h4>
                     <ul id="passedChecks"></ul>
                 </div>
                 <div class="analysis-section">
-                    <h4>⚠️ Flags & Concerns</h4>
+                    <h4>Flags & Concerns</h4>
                     <ul id="failedChecks"></ul>
                 </div>
             </div>
@@ -611,9 +572,9 @@
         </div>
         
         <div class="history-section" style="margin-top: 2rem;">
-            <h3>📜 Test History</h3>
+            <h3>Test History</h3>
             <div class="history-list" id="historyList">
-                <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">No tests run yet. Start testing to see history.</p>
+                <p style="color: var(--ink-faint); text-align: center; padding: 2rem;">No tests run yet. Start testing to see history.</p>
             </div>
         </div>
     </div>
@@ -701,18 +662,18 @@
                     datasets: [{
                         label: 'Current Test',
                         data: [0, 0, 0, 0, 0],
-                        backgroundColor: 'rgba(0, 245, 255, 0.2)',
-                        borderColor: '#00f5ff',
+                        backgroundColor: 'rgba(107, 58, 58, 0.2)',
+                        borderColor: '#6b3a3a',
                         borderWidth: 2,
-                        pointBackgroundColor: '#00f5ff'
+                        pointBackgroundColor: '#6b3a3a'
                     }, {
                         label: 'Benchmark',
                         data: [85, 90, 80, 88, 82],
-                        backgroundColor: 'rgba(168, 85, 247, 0.1)',
-                        borderColor: '#a855f7',
+                        backgroundColor: 'rgba(166, 90, 90, 0.1)',
+                        borderColor: '#a65a5a',
                         borderWidth: 1,
                         borderDash: [5, 5],
-                        pointBackgroundColor: '#a855f7'
+                        pointBackgroundColor: '#a65a5a'
                     }]
                 },
                 options: {
@@ -724,14 +685,14 @@
                             max: 100,
                             ticks: {
                                 stepSize: 20,
-                                color: '#9ca3af',
+                                color: '#8a8a8a',
                                 backdropColor: 'transparent'
                             },
                             grid: {
-                                color: '#2a2a3a'
+                                color: '#d4d0c8'
                             },
                             pointLabels: {
-                                color: '#fff',
+                                color: '#1a1a1a',
                                 font: {
                                     size: 12
                                 }
@@ -741,7 +702,7 @@
                     plugins: {
                         legend: {
                             labels: {
-                                color: '#fff'
+                                color: '#4a4a4a'
                             }
                         }
                     }
@@ -929,9 +890,9 @@
         }
         
         function getScoreColor(score) {
-            if (score >= 70) return 'var(--accent-green)';
-            if (score >= 50) return 'var(--accent-yellow)';
-            return 'var(--accent-red)';
+            if (score >= 70) return 'var(--accent)';
+            if (score >= 50) return 'var(--ink-light)';
+            return 'var(--accent-light)';
         }
         
         function addToHistory(results) {

@@ -8,22 +8,29 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --bg: #0a0a0a;
-            --card: #141414;
-            --border: #222;
-            --accent: #00d4aa;
-            --text: #fff;
-            --text-dim: #888;
+            --bg: #f5f3ef;
+            --paper: #ffffff;
+            --ink: #1a1a1a;
+            --ink-light: #4a4a4a;
+            --ink-faint: #8a8a8a;
+            --accent: #6b3a3a;
+            --accent-light: #a65a5a;
+            --line: #d4d0c8;
         }
         
         body {
-            font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
-            color: var(--text);
+            color: var(--ink);
             line-height: 1.6;
             padding: 24px;
             max-width: 900px;
             margin: 0 auto;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Libre Baskerville', Georgia, serif;
+            font-weight: 400;
         }
         
         h1 {
@@ -32,16 +39,15 @@
         }
         
         .subtitle {
-            color: var(--text-dim);
+            color: var(--ink-faint);
             margin-bottom: 32px;
         }
         
         .badge {
             display: inline-block;
             background: var(--accent);
-            color: #000;
+            color: #fff;
             padding: 4px 12px;
-            border-radius: 4px;
             font-size: 0.8rem;
             font-weight: 600;
             margin-bottom: 24px;
@@ -56,9 +62,8 @@
         }
         
         .stat {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            background: var(--paper);
+            border: 1px solid var(--line);
             padding: 16px;
             text-align: center;
         }
@@ -71,14 +76,13 @@
         
         .stat-label {
             font-size: 0.8rem;
-            color: var(--text-dim);
+            color: var(--ink-faint);
         }
         
         /* Workflow */
         .workflow {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            background: var(--paper);
+            border: 1px solid var(--line);
             padding: 24px;
             margin-bottom: 24px;
         }
@@ -98,8 +102,7 @@
             flex: 1;
             min-width: 150px;
             background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            border: 1px solid var(--line);
             padding: 16px;
             text-align: center;
         }
@@ -108,8 +111,7 @@
             width: 24px;
             height: 24px;
             background: var(--accent);
-            color: #000;
-            border-radius: 50%;
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -125,15 +127,14 @@
         
         .step-desc {
             font-size: 0.8rem;
-            color: var(--text-dim);
+            color: var(--ink-faint);
             margin-top: 4px;
         }
         
         /* Live Demo */
         .demo {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            background: var(--paper);
+            border: 1px solid var(--line);
             padding: 24px;
             margin-bottom: 24px;
         }
@@ -151,8 +152,7 @@
         
         .agent {
             background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            border: 1px solid var(--line);
             padding: 16px;
             display: flex;
             align-items: center;
@@ -175,7 +175,7 @@
         
         .agent-task {
             font-size: 0.85rem;
-            color: var(--text-dim);
+            color: var(--ink-faint);
         }
         
         .agent-score {
@@ -187,8 +187,7 @@
         .progress-bar {
             width: 100px;
             height: 8px;
-            background: var(--border);
-            border-radius: 4px;
+            background: var(--line);
             overflow: hidden;
         }
         
@@ -206,15 +205,14 @@
         }
         
         .metric-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            background: var(--paper);
+            border: 1px solid var(--line);
             padding: 20px;
         }
         
         .metric-title {
             font-size: 0.9rem;
-            color: var(--text-dim);
+            color: var(--ink-faint);
             margin-bottom: 8px;
         }
         
@@ -231,20 +229,19 @@
         
         /* Code */
         .code {
-            background: #0d0d0d;
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            background: var(--paper);
+            border: 1px solid var(--line);
             padding: 16px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.8rem;
             overflow-x: auto;
             white-space: pre;
-            color: #a0a0a0;
+            color: var(--ink-light);
         }
         
-        .code .keyword { color: #ff79c6; }
-        .code .string { color: #f1fa8c; }
-        .code .func { color: #50fa7b; }
+        .code .keyword { color: var(--accent); }
+        .code .string { color: var(--ink-faint); }
+        .code .func { color: var(--accent-light); }
         
         @media (max-width: 600px) {
             .stats { grid-template-columns: repeat(2, 1fr); }
@@ -254,7 +251,7 @@
     </style>
 </head>
 <body>
-    <span class="badge">🏋️ RL Research Gym</span>
+    <span class="badge">RL Research Gym</span>
     
     <h1>Reinforcement Learning Research Gym</h1>
     <p class="subtitle">OpenAI Gym-style environment for training & evaluating RL agents</p>
@@ -308,7 +305,7 @@
     
     <!-- Live Demo -->
     <div class="demo">
-        <h2>🔴 Live Agent Evaluation</h2>
+        <h2>Live Agent Evaluation</h2>
         <div class="agent-list">
             <div class="agent">
                 <div class="agent-info">
