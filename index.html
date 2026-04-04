@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RubyBoo | Agentic AI Engineer</title>
+    <title>RubyBoo | AI Agent Research & Development</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <style>
         * {
@@ -20,6 +20,7 @@
             --text: #e8e8ed;
             --text-dim: #8888a0;
             --border: #2a2a3a;
+            --glow: 0 0 40px rgba(0, 212, 170, 0.15);
         }
         
         body {
@@ -30,48 +31,97 @@
         }
         
         .container {
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
             padding: 0 24px;
         }
         
-        /* Hero */
+        /* Hero - New Narrative */
         .hero {
-            padding: 80px 0 60px;
+            padding: 100px 0 80px;
             text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse at center, rgba(0, 212, 170, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: var(--accent-dim);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0, 212, 170, 0.2);
         }
         
         .hero h1 {
-            font-size: 3.2rem;
+            font-size: 3.5rem;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         
-        .hero .title {
-            font-size: 1.4rem;
-            color: var(--accent);
-            font-weight: 500;
-            margin-bottom: 8px;
+        .hero-tagline {
+            font-size: 1.5rem;
+            color: var(--text);
+            font-weight: 600;
+            margin-bottom: 16px;
         }
         
         .hero .subtitle {
             color: var(--text-dim);
-            font-size: 1.1rem;
-            margin-bottom: 24px;
-            max-width: 500px;
+            font-size: 1.15rem;
+            margin-bottom: 32px;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.7;
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            justify-content: center;
+            margin-top: 48px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-top: 4px;
         }
         
         .hero .contact {
             display: flex;
-            gap: 20px;
+            gap: 24px;
             justify-content: center;
-            flex-wrap: wrap;
+            margin-top: 40px;
         }
         
         .hero .contact a {
@@ -79,16 +129,66 @@
             text-decoration: none;
             font-size: 0.95rem;
             transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         
         .hero .contact a:hover {
             color: var(--accent);
         }
         
+        /* Narrative Section */
+        .narrative {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+        
+        .narrative h2 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .narrative p {
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+        
+        .narrative-highlights {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+        
+        .narrative-highlight {
+            text-align: center;
+            padding: 16px;
+        }
+        
+        .narrative-highlight .icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+        
+        .narrative-highlight h4 {
+            font-size: 1rem;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+        
+        .narrative-highlight p {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+        
         /* Sections */
         section {
             padding: 48px 0;
-            border-bottom: 1px solid var(--border);
         }
         
         section:last-child {
@@ -98,67 +198,69 @@
         h2 {
             font-size: 1.5rem;
             font-weight: 600;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
             color: var(--text);
         }
         
-        /* Projects Grid */
-        .projects-grid {
+        /* Demo Cards - With Highlights */
+        .demos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
         }
         
-        .project-card {
+        .demo-card {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-            transition: border-color 0.2s, transform 0.2s;
+            border-radius: 16px;
+            padding: 28px;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
             text-decoration: none;
             color: inherit;
             display: block;
+            position: relative;
+            overflow: hidden;
         }
         
-        .project-card:hover {
+        .demo-card:hover {
             border-color: var(--accent);
             transform: translateY(-4px);
+            box-shadow: var(--glow);
         }
         
-        .project-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 8px;
+        .demo-card .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .demo-card .emoji {
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+        
+        .demo-card .card-title {
+            flex: 1;
+        }
+        
+        .demo-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 6px;
             color: var(--text);
         }
         
-        .project-card p {
-            color: var(--text-dim);
-            font-size: 0.95rem;
-            margin-bottom: 16px;
-            line-height: 1.5;
-        }
-        
-        .project-card .demo-btn {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--bg);
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 0.85rem;
+        .demo-card .demo-subtitle {
+            color: var(--accent);
+            font-size: 0.9rem;
             font-weight: 500;
         }
         
-        .project-card .emoji {
-            font-size: 2.5rem;
-            margin-bottom: 12px;
-        }
-        
-        /* Tags */
-        .tags {
+        .demo-card .tags {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
         
         .tag {
@@ -169,97 +271,302 @@
             font-size: 0.75rem;
         }
         
+        /* Highlights - The Key Addition */
+        .demo-highlights {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+        
+        .demo-highlights h4 {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        
+        .demo-highlights ul {
+            list-style: none;
+        }
+        
+        .demo-highlights li {
+            font-size: 0.9rem;
+            color: var(--text);
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .demo-highlights li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        
+        .demo-card .description {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .demo-card .demo-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .demo-card:hover .demo-btn {
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(0, 212, 170, 0.3);
+        }
+        
         /* Footer */
         footer {
             text-align: center;
-            padding: 40px 0;
+            padding: 60px 0;
             color: var(--text-dim);
             font-size: 0.9rem;
         }
         
-        @media (max-width: 600px) {
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                gap: 24px;
+            }
+            
+            .demos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .narrative-highlights {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- New Hero Section -->
         <header class="hero">
+            <span class="hero-badge">🤖 AI Agent Research & Development</span>
             <h1>RubyBoo</h1>
-            <p class="title">Agentic AI Engineer</p>
-            <p class="subtitle">Building intelligent agents that learn, evolve, and solve complex problems</p>
+            <p class="hero-tagline">Building agents that learn, evolve & align</p>
+            <p class="subtitle">
+                I research and build AI agents that can adapt, reason, and operate safely. 
+                From reinforcement learning environments to multi-agent systems — 
+                exploring how intelligent agents can better understand humans and the world.
+            </p>
+            
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">Live Demos</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">RL</div>
+                    <div class="stat-label">Focus</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">Safety</div>
+                    <div class="stat-label">Priority</div>
+                </div>
+            </div>
+            
             <div class="contact">
-                <a href="https://github.com/therobbieboo" target="_blank">GitHub</a>
-                <a href="https://therobbieboo.github.io" target="_blank">Portfolio</a>
+                <a href="https://github.com/therobbieboo" target="_blank">📂 GitHub</a>
+                <a href="https://github.com/therobbieboo/portfolio-new" target="_blank">📝 Source Code</a>
             </div>
         </header>
         
+        <!-- New Narrative Section -->
+        <div class="narrative">
+            <h2>🎯 What I Build</h2>
+            <p>
+                My research sits at the intersection of <strong>reinforcement learning</strong>, 
+                <strong>agent systems</strong>, and <strong>AI safety</strong>. I believe the next 
+                breakthrough in AI will come from agents that can learn from experience, reason 
+                about their actions, and stay aligned with human values.
+            </p>
+            <div class="narrative-highlights">
+                <div class="narrative-highlight">
+                    <div class="icon">🧠</div>
+                    <h4>Learning</h4>
+                    <p>Agents that improve through interaction and feedback</p>
+                </div>
+                <div class="narrative-highlight">
+                    <div class="icon">🔄</div>
+                    <h4>Evolution</h4>
+                    <p>Systems that adapt to new challenges and environments</p>
+                </div>
+                <div class="narrative-highlight">
+                    <div class="icon">🛡️</div>
+                    <h4>Safety</h4>
+                    <p>Keeping AI aligned with human intentions</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Featured Demos with Highlights -->
         <section>
-            <h2>Featured Demos</h2>
-            <div class="projects-grid">
-                <a href="demo-evolution-lab.html" class="project-card">
-                    <div class="emoji">🧬</div>
-                    <h3>Agent Evolution Lab</h3>
-                    <div class="tags">
-                        <span class="tag">AI</span>
-                        <span class="tag">Evolution</span>
-                        <span class="tag">Simulation</span>
+            <h2>🔬 Research Demos</h2>
+            <div class="demos-grid">
+                <!-- Demo 1: Agent Evolution Lab -->
+                <a href="demo-evolution-lab.html" class="demo-card">
+                    <div class="card-header">
+                        <div class="emoji">🧬</div>
+                        <div class="card-title">
+                            <h3>Agent Evolution Lab</h3>
+                            <span class="demo-subtitle">Neural Evolution Simulation</span>
+                        </div>
                     </div>
-                    <p>Watch AI agents evolve through natural selection. Real-time mutation, adaptation, and survival simulation.</p>
-                    <span class="demo-btn">View Demo →</span>
+                    <div class="tags">
+                        <span class="tag">Genetic Algorithms</span>
+                        <span class="tag">Neural Networks</span>
+                        <span class="tag">Selection</span>
+                    </div>
+                    <div class="demo-highlights">
+                        <h4>Highlights</h4>
+                        <ul>
+                            <li>Watch neural nets evolve from random to efficient</li>
+                            <li>Real-time mutation & crossover visualization</li>
+                            <li>Fitness landscape exploration</li>
+                        </ul>
+                    </div>
+                    <p class="description">Observe AI agents evolving through natural selection. Mutations, adaptation, and survival — all visualized in real-time.</p>
+                    <span class="demo-btn">Run Experiment →</span>
                 </a>
                 
-                <a href="demo-8-ai-safety-simulator.html" class="project-card">
-                    <div class="emoji">🛡️</div>
-                    <h3>AI Safety Simulator</h3>
-                    <div class="tags">
-                        <span class="tag">AI Safety</span>
-                        <span class="tag">Alignment</span>
-                        <span class="tag">Testing</span>
+                <!-- Demo 2: AI Safety Simulator -->
+                <a href="demo-8-ai-safety-simulator.html" class="demo-card">
+                    <div class="card-header">
+                        <div class="emoji">🛡️</div>
+                        <div class="card-title">
+                            <h3>AI Safety Simulator</h3>
+                            <span class="demo-subtitle">Alignment Testing Framework</span>
+                        </div>
                     </div>
-                    <p>Test AI value alignment and safety boundaries in real-time. Interactive safety testing interface.</p>
-                    <span class="demo-btn">View Demo →</span>
+                    <div class="tags">
+                        <span class="tag">Value Alignment</span>
+                        <span class="tag">Boundary Testing</span>
+                        <span class="tag">Safety</span>
+                    </div>
+                    <div class="demo-highlights">
+                        <h4>Highlights</h4>
+                        <ul>
+                            <li>Test AI responses to edge-case prompts</li>
+                            <li>Visualize alignment scores in real-time</li>
+                            <li>Understand AI safety challenges</li>
+                        </ul>
+                    </div>
+                    <p class="description">Interactive platform to test AI value alignment and safety boundaries. Learn why AI safety is critical.</p>
+                    <span class="demo-btn">Test Safety →</span>
                 </a>
                 
-                <a href="demo-agentic-gym.html" class="project-card">
-                    <div class="emoji">🏋️</div>
-                    <h3>Agentic Gym</h3>
-                    <div class="tags">
-                        <span class="tag">Agents</span>
-                        <span class="tag">Training</span>
-                        <span class="tag">RL</span>
+                <!-- Demo 3: RL Research Gym (Renamed from Agentic Gym) -->
+                <a href="demo-agentic-gym.html" class="demo-card">
+                    <div class="card-header">
+                        <div class="emoji">🏋️</div>
+                        <div class="card-title">
+                            <h3>RL Research Gym</h3>
+                            <span class="demo-subtitle">OpenAI Gym-Style Environment</span>
+                        </div>
                     </div>
-                    <p>Training environment for AI agents. Reinforcement learning playground with real-time feedback.</p>
-                    <span class="demo-btn">View Demo →</span>
+                    <div class="tags">
+                        <span class="tag">Reinforcement Learning</span>
+                        <span class="tag">Research</span>
+                        <span class="tag">OpenAI Gym</span>
+                    </div>
+                    <div class="demo-highlights">
+                        <h4>Highlights</h4>
+                        <ul>
+                            <li>Classic RL environments (CartPole, MountainCar...)</li>
+                            <li>Train agents with different algorithms</li>
+                            <li>Real-time training curves & metrics</li>
+                        </ul>
+                    </div>
+                    <p class="description">A research-focused reinforcement learning playground inspired by OpenAI Gym. Train, evaluate, and visualize RL agents.</p>
+                    <span class="demo-btn">Train Agent →</span>
                 </a>
                 
-                <a href="demo-openpapa.html" class="project-card">
-                    <div class="emoji">👨‍👧</div>
-                    <h3>OpenPAPA</h3>
+                <!-- Demo 4: OpenPAPA -->
+                <a href="demo-openpapa.html" class="demo-card">
+                    <div class="card-header">
+                        <div class="emoji">👨‍👧</div>
+                        <div class="card-title">
+                            <h3>OpenPAPA</h3>
+                            <span class="demo-subtitle">AI Voice Companion</span>
+                        </div>
+                    </div>
                     <div class="tags">
                         <span class="tag">TTS</span>
-                        <span class="tag">Voice</span>
-                        <span class="tag">Parenting</span>
+                        <span class="tag">Voice AI</span>
+                        <span class="tag">Family</span>
                     </div>
-                    <p>AI-powered voice companion for families. Text-to-speech application with personality.</p>
-                    <span class="demo-btn">View Demo →</span>
+                    <div class="demo-highlights">
+                        <h4>Highlights</h4>
+                        <ul>
+                            <li>Natural voice interactions with AI</li>
+                            <li>Personality-powered responses</li>
+                            <li>Built for family use cases</li>
+                        </ul>
+                    </div>
+                    <p class="description">AI-powered voice companion for families. Text-to-speech application with personality — built with love.</p>
+                    <span class="demo-btn">Try Voice →</span>
                 </a>
             </div>
         </section>
         
+        <!-- About Section -->
         <section>
-            <h2>About</h2>
-            <p style="color: var(--text-dim);">
-                Building the future of AI agents — from self-evolving systems to interactive simulations. 
-                Passionate about AI safety, emergent behavior, and making AI more understandable.
-            </p>
+            <h2>About Me</h2>
+            <div class="narrative" style="margin: 0;">
+                <p>
+                    Passionate about building AI systems that are not just powerful, but also 
+                    <strong>understandable, safe, and aligned with human values</strong>. 
+                    My work focuses on making AI more accessible through interactive demos 
+                    and open-source tools.
+                </p>
+                <div class="narrative-highlights" style="margin-top: 24px;">
+                    <div class="narrative-highlight">
+                        <div class="icon">🔬</div>
+                        <h4>Research-Driven</h4>
+                        <p> grounding in RL & agent systems</p>
+                    </div>
+                    <div class="narrative-highlight">
+                        <div class="icon">🛠️</div>
+                        <h4>Build-First</h4>
+                        <p>Learning by building and sharing</p>
+                    </div>
+                    <div class="narrative-highlight">
+                        <div class="icon">🌱</div>
+                        <h4>Safety-Focused</h4>
+                        <p>AI that benefits humanity</p>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
     
     <footer>
-        <p>Built with ❤️ by RubyBoo</p>
+        <p>Built with ❤️ by <a href="https://github.com/therobbieboo" target="_blank">RubyBoo</a></p>
+        <p style="margin-top: 8px; font-size: 0.8rem;">Open to collaboration & research opportunities</p>
     </footer>
 </body>
 </html>
