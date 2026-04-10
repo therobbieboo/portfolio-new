@@ -5,21 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Bonsai Garden - Inner Product</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --bg: #0a0f0a;
-            --card: #0f1a0f;
-            --border: #1a2a1a;
-            --accent: #00ff87;
-            --accent-2: #7cb342;
-            --accent-3: #c0ca33;
-            --text: #e8f5e9;
-            --text-dim: #4a6b4a;
+            --bg: #2C2C2C; /* 啞暗暖灰 */
+            --card: #3C3C3C; /* Slightly lighter card background for contrast */
+            --border: #4A4A4A; /* Adjusted border color */
+            --accent: #8B8C1D; /* 深芥末綠 */
+            --accent-2: #A3A42E; /* Lighter deep mustard green */
+            --accent-3: #6F7016; /* Darker deep mustard green */
+            --text: #F8F8F8; /* 米白 */
+            --text-dim: #BFBFBF; /* Dimmed text for 米白 */
         }
         
         body {
-            font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
@@ -53,8 +54,8 @@
         
         .badge {
             display: inline-block;
-            background: linear-gradient(90deg, var(--accent), var(--accent-2));
-            color: #000;
+            background: var(--accent);
+            color: var(--bg);
             padding: 6px 16px;
             border-radius: 20px;
             font-size: 0.7rem;
@@ -64,8 +65,9 @@
         }
         
         h1 {
-            font-size: 2.5rem;
-            font-weight: 300;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 400;
             margin-bottom: 12px;
             color: var(--accent);
         }

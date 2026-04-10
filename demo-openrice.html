@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpenRice - Your Voice Food Companion</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
         :root {
-            --bg-dark: #0a0a0f;
-            --bg-card: #12121a;
-            --accent-red: #ff4444;
-            --accent-orange: #ff6b35;
-            --accent-yellow: #ffc107;
-            --accent-green: #10b981;
-            --text-primary: #ffffff;
-            --text-secondary: #9ca3af;
-            --border-color: #2a2a3a;
+            --bg: #2C2C2C; /* 啞暗暖灰 */
+            --card: #3C3C3C; /* Slightly lighter card background for contrast */
+            --border: #4A4A4A; /* Adjusted border color */
+            --accent: #8B8C1D; /* 深芥末綠 */
+            --accent-2: #A3A42E; /* Lighter deep mustard green */
+            --accent-3: #6F7016; /* Darker deep mustard green */
+            --text: #F8F8F8; /* 米白 */
+            --text-dim: #BFBFBF; /* Dimmed text for 米白 */
         }
         
         * {
@@ -24,9 +24,9 @@
         }
         
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -39,8 +39,8 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(ellipse at 30% 20%, rgba(255, 68, 68, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 80%, rgba(255, 107, 53, 0.08) 0%, transparent 50%);
+                radial-gradient(ellipse at 30% 20%, rgba(139, 140, 29, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(163, 164, 46, 0.08) 0%, transparent 50%);
             pointer-events: none;
             z-index: -1;
         }
@@ -61,12 +61,14 @@
         }
         
         header h1 {
-            font-size: 2rem;
-            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 400;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            color: var(--accent);
         }
         
         header h1 span {
@@ -74,10 +76,332 @@
         }
         
         header p {
-            color: var(--text-secondary);
+            color: var(--text-dim);
             margin-top: 0.5rem;
             font-size: 0.9rem;
         }
+        
+        /* Voice Panel - Main Interaction */
+        .voice-main {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 2rem;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .voice-main:hover {
+            border-color: var(--accent);
+        }
+        
+        .voice-main.listening {
+            border-color: var(--accent);
+            box-shadow: 0 0 40px rgba(139, 140, 29, 0.3);
+        }
+        
+        .voice-main.speaking {
+            border-color: var(--accent-2);
+            box-shadow: 0 0 40px rgba(163, 164, 46, 0.3);
+        }
+        
+        /* Animated Rice Bowl */
+        .rice-bowl {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
+            position: relative;
+            transition: transform 0.3s;
+        }
+        
+        .rice-bowl-icon {
+            font-size: 4rem;
+            display: block;
+            transition: transform 0.3s;
+        }
+        
+        .voice-main.listening .rice-bowl-icon {
+            animation: bounce 0.6s infinite;
+        }
+        
+        .voice-main.speaking .rice-bowl-icon {
+            animation: speak 0.8s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes speak {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .voice-status {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .voice-hint {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+        
+        /* Location Badge */
+        .location-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 9999px;
+            padding: 0.5rem 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+        }
+        
+        .location-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Chat - Voice Transcripts */
+        .chat-log {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        
+        .voice-message {
+            padding: 1rem 1.25rem;
+            border-radius: 1.25rem;
+            max-width: 90%;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .voice-message.user {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: var(--bg);
+            align-self: flex-end;
+            border-bottom-right-radius: 0.25rem;
+        }
+        
+        .voice-message.ai {
+            background: var(--card);
+            border: 1px solid var(--border);
+            align-self: flex-start;
+            border-bottom-left-radius: 0.25rem;
+        }
+        
+        .voice-message .icon {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+        
+        .voice-message .text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .voice-message .time {
+            font-size: 0.65rem;
+            opacity: 0.6;
+            margin-top: 0.5rem;
+        }
+        
+        /* Restaurant Cards */
+        .restaurant-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-top: 0.75rem;
+            animation: slideUp 0.3s ease;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .restaurant-card:hover {
+            border-color: var(--accent);
+            transform: translateX(4px);
+        }
+        
+        .restaurant-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .restaurant-name {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        
+        .restaurant-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-weight: 600;
+        }
+        
+        .restaurant-rating .star {
+            color: var(--accent-2);
+        }
+        
+        .restaurant-info {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+        }
+        
+        .restaurant-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background: rgba(139, 140, 29, 0.15);
+            color: var(--accent);
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+        }
+        
+        .tag.michelin {
+            background: rgba(163, 164, 46, 0.15);
+            color: var(--accent-2);
+        }
+        
+        /* Voice Wave Animation */
+        .wave-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            height: 40px;
+            margin-top: 1rem;
+        }
+        
+        .voice-main.listening .wave-container,
+        .voice-main.speaking .wave-container {
+            display: flex;
+        }
+        
+        .wave-bar {
+            width: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+            animation: wave 0.5s ease-in-out infinite;
+        }
+        
+        .voice-main.listening .wave-bar {
+            animation: wave 0.4s ease-in-out infinite;
+        }
+        
+        .voice-main.speaking .wave-bar {
+            animation: wave 0.6s ease-in-out infinite;
+            background: var(--accent-2);
+        }
+        
+        .wave-bar:nth-child(1) { height: 20px; animation-delay: 0s; }
+        .wave-bar:nth-child(2) { height: 30px; animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { height: 40px; animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { height: 30px; animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { height: 20px; animation-delay: 0.4s; }
+        
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1); }
+        }
+        
+        /* Quick Voice Commands */
+        .quick-voice {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: auto;
+        }
+        
+        .voice-btn {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1rem;
+            color: var(--text);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .voice-btn:hover {
+            border-color: var(--accent);
+            background: rgba(139, 140, 29, 0.1);
+        }
+        
+        /* Footer Stats */
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><span>🍚</span> OpenRice</h1>
+            <p>Your Voice Food Companion</p>
+        </header>
         
         /* Voice Panel - Main Interaction */
         .voice-main {
@@ -204,8 +528,8 @@
         }
         
         .voice-message.user {
-            background: linear-gradient(135deg, var(--accent-red), var(--accent-orange));
-            color: #fff;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: var(--bg);
             align-self: flex-end;
             border-bottom-right-radius: 0.25rem;
         }
@@ -270,7 +594,7 @@
         }
         
         .restaurant-rating .star {
-            color: var(--accent-yellow);
+            color: var(--accent-2);
         }
         
         .restaurant-info {
@@ -288,16 +612,16 @@
         }
         
         .tag {
-            background: rgba(255, 68, 68, 0.15);
-            color: var(--accent-red);
+            background: rgba(139, 140, 29, 0.15);
+            color: var(--accent);
             padding: 0.25rem 0.6rem;
             border-radius: 9999px;
             font-size: 0.7rem;
         }
         
         .tag.michelin {
-            background: rgba(255, 193, 7, 0.15);
-            color: var(--accent-yellow);
+            background: rgba(163, 164, 46, 0.15);
+            color: var(--accent-2);
         }
         
         /* Voice Wave Animation */
@@ -317,7 +641,7 @@
         
         .wave-bar {
             width: 4px;
-            background: var(--accent-red);
+            background: var(--accent);
             border-radius: 2px;
             animation: wave 0.5s ease-in-out infinite;
         }
@@ -328,7 +652,7 @@
         
         .voice-main.speaking .wave-bar {
             animation: wave 0.6s ease-in-out infinite;
-            background: var(--accent-orange);
+            background: var(--accent-2);
         }
         
         .wave-bar:nth-child(1) { height: 20px; animation-delay: 0s; }
