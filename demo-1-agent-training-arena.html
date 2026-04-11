@@ -9,7 +9,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --bg: #F5F5DC; /* 米白 */
+            --bg: #F8F8F8; /* 米白 */
             --card: #EDECE0; /* Slightly darker 米白 for contrast */
             --border: #D3D3C2; /* Lighter gray border */
             --accent: #6B8E23; /* 深芥末綠 */
@@ -30,6 +30,11 @@
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text);
         }
         
         /* Animated Background with Particles */
@@ -106,10 +111,6 @@
             font-size: 2.5rem;
             font-weight: 300;
             margin-bottom: 12px;
-            background: linear-gradient(135deg, var(--accent), var(--tertiary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         
         .subtitle {

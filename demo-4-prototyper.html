@@ -10,14 +10,14 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --bg: #2C2C2C; /* 啞暗暖灰 */
-            --card: #3C3C3C; /* Slightly lighter card background for contrast */
-            --border: #4A4A4A; /* Adjusted border color */
-            --accent: #8B8C1D; /* 深芥末綠 */
-            --accent-2: #A3A42E; /* Lighter deep mustard green */
-            --accent-3: #6F7016; /* Darker deep mustard green */
-            --text: #F8F8F8; /* 米白 */
-            --text-dim: #BFBFBF; /* Dimmed text for 米白 */
+            --bg: #F8F8F8; /* 米白 */
+            --card: #EDECE0; /* Consistent with --card in other demos for contrast */
+            --border: #D3D3C2; /* Lighter gray border (consistent with demo-1) */
+            --accent: #6B8E23; /* 深芥末綠 */
+            --accent-2: #85A04D; /* Lighter deep mustard green */
+            --accent-3: #526B1E; /* Darker deep mustard green */
+            --text: #2C2C2C; /* 啞暗暖灰 */
+            --text-dim: #555555; /* Dimmed text for 啞暗暖灰 (consistent with demo-1) */
         }
         
         body {
@@ -26,6 +26,11 @@
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text);
         }
         
         /* Stars Background */
@@ -72,14 +77,14 @@
         }
         
         h1 {
-            font-family: 'Playfair Display', serif;
+            /* font-family: 'Playfair Display', serif; - covered by h1, h2, h3 rule */
             font-size: 2.8rem;
             font-weight: 400;
             margin-bottom: 12px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            /* background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3)); - removed */
+            /* -webkit-background-clip: text; - removed */
+            /* -webkit-text-fill-color: transparent; - removed */
+            /* background-clip: text; - removed */
         }
         
         .subtitle {

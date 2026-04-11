@@ -7,14 +7,14 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
         :root {
-            --bg: #2C2C2C; /* 啞暗暖灰 */
-            --card: #3C3C3C; /* Slightly lighter card background for contrast */
-            --border: #4A4A4A; /* Adjusted border color */
-            --accent: #8B8C1D; /* 深芥末綠 */
-            --accent-2: #A3A42E; /* Lighter deep mustard green */
-            --accent-3: #6F7016; /* Darker deep mustard green */
-            --text: #F8F8F8; /* 米白 */
-            --text-dim: #BFBFBF; /* Dimmed text for 米白 */
+            --bg: #F8F8F8; /* 米白 */
+            --card: #EDECE0; /* Consistent with other demos */
+            --border: #D3D3C2; /* Lighter gray border */
+            --accent: #6B8E23; /* 深芥末綠 */
+            --accent-2: #85A04D; /* Lighter deep mustard green */
+            --accent-3: #526B1E; /* Darker deep mustard green */
+            --text: #2C2C2C; /* 啞暗暖灰 */
+            --text-dim: #555555; /* Dimmed text for 啞暗暖灰 */
         }
         
         * {
@@ -29,6 +29,11 @@
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text);
         }
         
         body::before {

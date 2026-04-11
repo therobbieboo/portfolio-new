@@ -8,14 +8,14 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
         :root {
-            --bg: #2C2C2C; /* 啞暗暖灰 */
-            --paper: #3C3C3C; /* Slightly lighter for card background */
-            --ink: #F8F8F8; /* 米白 */
-            --ink-light: #BFBFBF; /* Dimmed 米白 */
-            --ink-faint: #8F8F8F; /* Even fainter text */
-            --accent: #8B8C1D; /* 深芥末綠 */
-            --accent-light: #A3A42E; /* Lighter deep mustard green */
-            --line: #4A4A4A; /* Adjusted border color */
+            --bg: #F8F8F8; /* 米白 */
+            --paper: #EDECE0; /* Consistent with --card in other demos for contrast */
+            --ink: #2C2C2C; /* 啞暗暖灰 */
+            --ink-light: #555555; /* Dimmed 啞暗暖灰 */
+            --ink-faint: #8F8F8F; /* Fainter text for hierarchy */
+            --accent: #6B8E23; /* 深芥末綠 */
+            --accent-light: #85A04D; /* Lighter deep mustard green */
+            --line: #D3D3C2; /* Consistent border color */
         }
         
         * {
@@ -30,6 +30,11 @@
             color: var(--ink);
             min-height: 100vh;
             overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--ink);
         }
         
         .container {
@@ -47,8 +52,8 @@
         header h1 {
             font-size: 2.8rem;
             font-weight: 400;
-            font-family: 'Playfair Display', serif;
-            color: var(--ink);
+            /* font-family: 'Playfair Display', serif; - already covered by h1, h2, h3 rule */
+            /* color: var(--ink); - already covered by h1, h2, h3 rule */
             margin-bottom: 0.5rem;
         }
         
